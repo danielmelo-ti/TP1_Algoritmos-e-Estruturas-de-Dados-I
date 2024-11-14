@@ -5,86 +5,71 @@
 
 //inicializa o TAD e permite que o usuário insira os dados como quiser.
 
-void inicializar_mineral(Mineral* mine, MINERIO Nome, double Dureza, double Reatividade, CORM Cor){
-    if (Nome < FERROLITA || Nome > CALARIS || Cor < ACINZENTADO || Cor > VERMELHO)
-    {
+void inicializar_mineral(Mineral* mine, const char* Nome, double Dureza, double Reatividade, CORM Cor){
+    if ((strcmp(Nome, "Ferrolita") != 0 && strcmp(Nome, "Calaris") != 0 &&
+         strcmp(Nome, "Solarium") != 0 && strcmp(Nome, "Aquavitae") != 0 &&
+         strcmp(Nome, "Terranita") != 0) ||
+        (Cor < ACINZENTADO || Cor > VERMELHO)) {
         printf("O Nome e cor do mineral devem ser representados de acordo com os dados a seguir:\n");
-        printf("FERROLITA = 1, SOLARIUM = 2, AQUAVITAE = 3, TERRANITA = 4, CALARIS = 5");
-        printf("ACINZENTADO = 1, AMARELO = 2, AZULADO = 3, MARROM = 4, VERMELHO = 5");
+        printf("Nomes: FERROLITA, SOLARIUM, AQUAVITAE, TERRANITA, CALARIS\n");
+        printf("Cores: ACINZENTADO, AMARELO, AZULADO, MARROM, VERMELHO\n");
+        return;
     }
-    mine->Nome = Nome;
+    strncpy(mine->Nome, Nome, TMAX - 1);
     mine->Dureza = Dureza;
     mine->Reatividade = Reatividade;
     mine->Cor = Cor;
-
 }
 
 //uso do switch aqui para preencher por completo o TAD Mineral com o input apenas do valor para nome.
 
-void set_mineral(Mineral* mine){
-    set_nome(mine);
-    switch (mine->Nome)
+void set_mineral(Mineral* mine, const char* nome1){
+    set_nome(mine,nome1);
+    if (strcmp(nome1, "Ferrolita") == 0)
     {
-    case 1:
         mine->Dureza = 0.5;
         mine->Reatividade = 0.7;
         mine->Cor = ACINZENTADO;
-        break;
-    case 2:
+    }
+    else if (strcmp(nome1, "Solarium") == 0)
+    {
         mine->Dureza = 0.9;
         mine->Reatividade = 0.2;
         mine->Cor = AMARELO;
-        break;
-    case 3:
+    }
+    else if (strcmp(nome1, "Aquavitae") == 0)
+    {
         mine->Dureza = 0.5;
         mine->Reatividade = 0.8;
         mine->Cor = AZULADO;
-        break;
-    case 4:
+    }
+    else if (strcmp(nome1, "Terranita") == 0)
+    {
         mine->Dureza = 0.7;
         mine->Reatividade = 0.6;
         mine->Cor = MARROM;
-        break;
-    case 5:
+    }
+    else if (strcmp(nome1, "Calaris") == 0)
+    {
         mine->Dureza = 0.6;
         mine->Reatividade = 0.5;
         mine->Cor = VERMELHO;
-        break;
-    default:
-        printf("Esse mineral nao existe na amostra.\n");
-        break;
     }
-
+    else
+    {
+        printf("Esse mineral nao existe na amostra.\n");
+    }
 }
 
 //função para  pedir ao usuário o número que corresponde ao mineral encontrado.
-
-void set_nome(Mineral* mine){
-    printf("Digite o número correspondente ao nome do mineral:\nFERROLITA = 1\n SOLARIUM = 2\n AQUAVITAE = 3\n TERRANITA = 4\n CALARIS = 5\n:");
-    scanf("%d", (int*)&mine->Nome);
-
+void set_nome(Mineral *mine, const char *nome) 
+{
+    strncpy(mine->Nome, nome, sizeof(mine->Nome) - 1);
 }
 
 //função para imprimir o nome.
 void get_nome(Mineral* mine){
-    switch (mine->Nome)
-    {
-    case 1:
-        printf("Nome: FERROLITA\n");
-        break;
-    case 2:
-        printf("Nome: SOLARIUM\n");
-        break;
-    case 3:
-        printf("Nome: AQUAVITAE\n");
-        break;
-    case 4:
-        printf("Nome: TERRANITA\n");
-        break;
-    default:
-        printf("Nome: CALARIS\n");
-        break;
-    }
+    printf("%s\n", mine->Nome);
 }
 
 //função para imprimir dados numéricos.

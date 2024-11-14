@@ -83,34 +83,34 @@ void classificar_rocha(RochaMineral *nova_rocha){
     }
 
     if (Ferrolita == 1 && Solarium == 0 && Aquavitae == 0 && Terranita == 0 && Calaris == 0) {
-        strcpy(nova_rocha->categoria, "Ferrom");
+        nova_rocha->categoria = Ferrom;
     }
     else if (Solarium == 1 && Ferrolita == 0 && Aquavitae == 0 && Terranita == 0 && Calaris == 0){
-        strcpy(nova_rocha->categoria, "Solaris");
+        nova_rocha->categoria = Solaris;
     }
     else if (Ferrolita == 1 && Aquavitae == 1 && Solarium == 0 && Terranita == 0 && Calaris == 0){
-        strcpy(nova_rocha->categoria, "Aquaferro");
+        nova_rocha->categoria = Aquaferro;
     }
     else if (Terranita == 1 && Calaris == 1 && Ferrolita == 0 && Aquavitae == 0 && Solarium == 0){
-        strcpy(nova_rocha->categoria, "Terrolis");
+        nova_rocha->categoria = Terrolis;
     }
     else if (Terranita == 1 && Solarium == 1 && Ferrolita == 0 && Aquavitae== 0 && Calaris == 0){
-        strcpy(nova_rocha->categoria, "Terrasol");
+        nova_rocha->categoria = Terrasol;
     }
     else if (Aquavitae == 1 && Terranita == 1 && Ferrolita == 0 && Solarium == 0 && Calaris == 0){
-        strcpy(nova_rocha->categoria, "Aquaterra");
+        nova_rocha->categoria = Aquaterra;
     }
     else if (Calaris == 1 && Aquavitae == 1 && Ferrolita == 0 && Solarium == 0 && Terranita == 0){
-        strcpy(nova_rocha->categoria, "Calquer");
+        nova_rocha->categoria = Calquer;
     }
     else if (Solarium == 1 && Ferrolita == 1 && Aquavitae == 0 && Terranita == 0 && Calaris == 0){
-        strcpy(nova_rocha->categoria, "Solarisfer");
+        nova_rocha->categoria = Solarisfer;
     }
     else if (Terranita == 1 && Ferrolita == 1 && Aquavitae == 0 && Solarium == 0 && Calaris == 0){
-        strcpy(nova_rocha->categoria, "Terralis");
+        nova_rocha->categoria = Terralis;
     }
     else if (Aquavitae == 1 && Calaris == 1 && Ferrolita == 1){
-        strcpy(nova_rocha->categoria, "Aquacalis");
+        nova_rocha->categoria = Aquacalis;
     }
 }
 
@@ -125,12 +125,12 @@ void preencher_rocha_mineral(RochaMineral *nova_rocha){
     char mineral_entrada[20];
 
     srand(time(NULL)); //usado para que o código veja o horário do pc e deixe 
-    int id = rand() % 100;
+    id = rand() % 100;
 
-    print("Insira a localizacao: (Latitude e Longitude) ");
-    scanf("%f %f", localizacao.Latitude, localizacao.Longitude);
+    printf("Insira a localizacao: (Latitude e Longitude) ");
+    scanf("%f %f", &localizacao.Latitude, &localizacao.Longitude);
     printf("Insira o peso: ");
-    scanf("%f", peso);
+    scanf("%f", &peso);
     printf("Insira os minerais: ");
 
     // Lê a linha inteira
@@ -140,21 +140,11 @@ void preencher_rocha_mineral(RochaMineral *nova_rocha){
     char *mineral2 = strtok(NULL, " \n");
     char *mineral3 = strtok(NULL, " \n");
 
-    insere_mineral(nova_rocha->lista.minerais, mineral1);
+    if (mineral1) insere_mineral(&lista, mineral1);
+    if (mineral2) insere_mineral(&lista, mineral2);
+    if (mineral3) insere_mineral(&lista, mineral3);
 
-    /* Verifica e imprime as palavras presentes
-    if (nome1 != NULL) {
-        printf("Nome 1: %s\n", nome1);
-    }
-    if (nome2 != NULL) {
-        printf("Nome 2: %s\n", nome2);
-    }
-    if (nome3 != NULL) {
-        printf("Nome 3: %s\n", nome3);
-    }
-    */
-
-    
+    classificar_rocha(nova_rocha);
 
     time_t t = time(NULL);
     struct tm *data_hora_atual = localtime(&t);
@@ -167,5 +157,7 @@ void preencher_rocha_mineral(RochaMineral *nova_rocha){
             data_hora_atual->tm_mon + 1, data_hora_atual->tm_year + 1900, data_hora_atual->tm_hour, 
             data_hora_atual->tm_min, data_hora_atual->tm_sec);
     }
+
+    inicializar_rocha_mineral(nova_rocha, id, peso, lista, categoria, localizacao, data_coleta);
 
 }
