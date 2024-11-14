@@ -5,7 +5,7 @@
 
 
 void inicializa_lista(Lista_de_minerais* lista){
-    lista->ultimo = -1;
+    lista->ultimo = 0;
 }
 
 void insere_mineral(Lista_de_minerais* lista, Mineral mine){
@@ -16,7 +16,8 @@ void insere_mineral(Lista_de_minerais* lista, Mineral mine){
     }
     else
     {
-        lista->minerais[lista->ultimo++] = mine;
+        lista->minerais[lista->ultimo] = mine;
+        lista->ultimo++;
     }
 }
 
@@ -24,10 +25,48 @@ void imprime_lista(Lista_de_minerais* lista){
     //uso de ponteiro para permitir impressão mais fácil dos valores, sem necessidade de switch case
     for (int i = 0; i < lista->ultimo; i++)
     {
-        printf("Mineral %d:", i+1);
-        get_nome(&lista->minerais[i]);
-        get_num_data(&lista->minerais[i]);
-        get_cor(&lista->minerais[i]);
+        switch (lista->minerais[i].Nome)
+    {
+    case 1:
+        printf("Nome: FERROLITA\n");
+        break;
+    case 2:
+        printf("Nome: SOLARIUM\n");
+        break;
+    case 3:
+        printf("Nome: AQUAVITAE\n");
+        break;
+    case 4:
+        printf("Nome: TERRANITA\n");
+        break;
+    default:
+        printf("Nome: CALARIS\n");
+        break;
+    }
+    printf("Dureza: %.1f\n", lista->minerais[i].Dureza);
+    printf("Reatividade: %.1f\n", lista->minerais[i].Reatividade);
+
+    switch (lista->minerais[i].Cor) {
+        case ACINZENTADO:
+            printf("Cor: ACINZENTADO\n");
+            break;
+        case AMARELO:
+            printf("Cor: AMARELO\n");
+            break;
+        case AZULADO:
+            printf("Cor: AZULADO\n");
+            break;
+        case MARROM:
+            printf("Cor: MARROM\n");
+            break;
+        case VERMELHO:
+            printf("Cor: VERMELHO\n");
+            break;
+        default:
+            printf("A cor nao corresponde a nenhum mineral da regiao\n");
+            break;
+    }
+    printf("--------------\n");
     }
 }
 
@@ -65,5 +104,5 @@ void retira_mineral(Lista_de_minerais* lista, MINERIO Tnome){
 }
 
 void limpeza(Lista_de_minerais* lista){
-    lista->ultimo = -1;
+    lista->ultimo = 0;
 }

@@ -5,6 +5,7 @@
 
 typedef struct {
     Mineral minerais[MAX];
+    int primeiro;
     int ultimo;
 } Lista_de_minerais;
 
