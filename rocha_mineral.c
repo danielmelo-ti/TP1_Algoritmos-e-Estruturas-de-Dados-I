@@ -49,19 +49,19 @@ void classificar_rocha(RochaMineral *nova_rocha, Lista_de_minerais *nova_lista){
     int Ferrolita = 0, Solarium = 0, Aquavitae = 0, Terranita = 0, Calaris = 0;
 
     for (int i = 0; i < 3; i++) {
-        if (strcmp(nova_lista->minerais[i].Nome, "Ferrolita") == 0){
+        if (strcmp(nova_lista->Lminerais[i].Nome, "Ferrolita") == 0){
             Ferrolita += 1;
         }
-        if (strcmp(nova_lista->minerais[i].Nome, "Solarium") == 0) {
+        if (strcmp(nova_lista->Lminerais[i].Nome, "Solarium") == 0) {
             Solarium += 1;
         }
-        if (strcmp(nova_lista->minerais[i].Nome, "Aquavitae") == 0) {
+        if (strcmp(nova_lista->Lminerais[i].Nome, "Aquavitae") == 0) {
             Aquavitae += 1;
         }
-        if (strcmp(nova_lista->minerais[i].Nome, "Terranita") == 0) {
+        if (strcmp(nova_lista->Lminerais[i].Nome, "Terranita") == 0) {
             Terranita += 1;
         }
-        if (strcmp(nova_lista->minerais[i].Nome, "Calaris") == 0) {
+        if (strcmp(nova_lista->Lminerais[i].Nome, "Calaris") == 0) {
             Calaris += 1;
         }
     }
