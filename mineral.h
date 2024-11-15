@@ -1,7 +1,9 @@
 #ifndef MINERAL_H
 #define MINERAL_H
-
-#define TMAX 13
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#define TMAX 100
 //cores dos minerais
 typedef enum CORM{
     ACINZENTADO = 1,
@@ -17,21 +19,32 @@ typedef struct{
     float Reatividade;
     CORM Cor;
 } Mineral;
+
 //inicializa o TAD
-void inicializar_mineral(Mineral* mine, const char* Nome, double Dureza, double Reatividade, CORM Cor);
+Mineral inicializar_mineral(Mineral* mine, char* Nome, double Dureza, double Reatividade, CORM Cor);
+
 //Cria, de fato, o TAD e o preenche com os valores automaticamente assim que é dado o nome do mineral através de um int.
-void set_mineral(Mineral* mine, const char* Nome);
+void preenche_mineral(Mineral* mine, char* Nome);
+
+//sets
+
 //definir o nome do mineral.
-void set_nome(Mineral* mine, const char* Nome);
-//print do TAD completo, óbvio. Por que diabos estou escrevendo isso? Tédio é foda...
-void imprimir_mineral(Mineral* mine);
-//definir dados numéricos. Pelo menos esse vale a pena explicar o nome. É "numerical data", se estiver curioso.
-void set_num_data(Mineral* mine, float dureza, float reatividade);
+void set_nome(Mineral* mine, char* Nome);
+
+//define a dureza
+void set_hardness(Mineral *mine, double hard);
+//define a reatividade
+void set_react(Mineral *mine, double react);
+//define cor
+void set_cor(Mineral *mine, CORM cor);
+//gets
+
 //print nome, duh.
-void get_nome(Mineral* mine);
+char* get_nome(Mineral* mine);
 //print dados numéricos.
-void get_num_data(Mineral* mine);
+double get_num_data(Mineral* mine);
 //print cor. mais uma óbvia.
 void get_cor(Mineral* mine);
-
+//print do TAD completo, óbvio. Por que diabos estou escrevendo isso? Tédio é foda...
+void imprimir_mineral(Mineral* mine);
 #endif
