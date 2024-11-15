@@ -1,9 +1,6 @@
 #ifndef SONDA_H_INCLUDED
 #define SONDA_H_INCLUDED
 
-#include <stdio.h>
-#include <stdlib.h>
-
 typedef struct Localizacao
 {
     double Latitude;

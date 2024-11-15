@@ -98,10 +98,55 @@ void classificar_rocha(RochaMineral *nova_rocha, Lista_de_minerais *nova_lista){
     }
 }
 
+void preencher_rocha_mineral(RochaMineral *nova_rocha, Lista_de_minerais *nova_lista){
+        int id = 0;
+        float peso = 0;
+        Localizacao_rocha localizacao;
+        char data_coleta[255];
+
+        char mineral_entrada[255];
+
+        id = rand() % 100;
+
+        printf("Insira a localizacao: (Latitude e Longitude) ");
+        scanf("%f %f", &localizacao.Latitude, &localizacao.Longitude);
+        printf("Insira o peso: ");
+        scanf("%f", &peso);
+
+        //data
+
+        time_t t = time(NULL);
+        struct tm data_hora_atual = *localtime(&t);
+
+        if (data_hora_atual.tm_hour - 3 < 0) {
+            int aux = data_hora_atual.tm_hour;
+            data_hora_atual.tm_hour = 24 + aux - 3;
+        } else {
+        sprintf(data_coleta, "Dia: %02d, Mes: %02d, Ano: %d, Hora: %02d:%02d:%02d", data_hora_atual.tm_mday - 1, 
+                data_hora_atual.tm_mon + 1, data_hora_atual.tm_year + 1900, data_hora_atual.tm_hour, 
+                data_hora_atual.tm_min, data_hora_atual.tm_sec);
+        }
+
+        //Lê a linha inteira
+        fgetc(stdin);
+        fgets(mineral_entrada, 255, stdin);
+        //Utiliza strtok para dividir a string com base no segundo parâmetro, em até três palavras
+        char *mineral1 = strtok(mineral_entrada, " ");
+        char *mineral2 = strtok(NULL, " ");
+        char *mineral3 = strtok(NULL, " ");
+
+        insere_mineral(nova_lista, mineral1);
+        insere_mineral(nova_lista, mineral2);
+        insere_mineral(nova_lista, mineral3);
+
+        inicializar_rocha_mineral(nova_rocha, id, peso, nova_lista, localizacao, data_coleta);
+
+}
+
 void imprimir_rocha_mineral(RochaMineral *nova_rocha){
     printf("ID: %d", nova_rocha->id);
     printf("\nCategoria: %s", nova_rocha->categoria);
     printf("\nPeso: %f", nova_rocha->peso);
-    printf("\nLocalizacao: %f %f", nova_rocha->localizacao.Latitude, nova_rocha->localizacao.Latitude);
+    printf("\nLocalizacao: %f %f", nova_rocha->localizacao.Latitude, nova_rocha->localizacao.Longitude);
     printf("\nData da coleta: %s", nova_rocha->data_coleta);
 }

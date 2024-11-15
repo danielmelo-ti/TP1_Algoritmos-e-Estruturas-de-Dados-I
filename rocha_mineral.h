@@ -46,6 +46,8 @@ void set_peso(RochaMineral *nova_rocha, float novo_peso);
 void set_localizacao(RochaMineral *nova_rocha, Localizacao_rocha nova_localizacao);
 void set_data_coleta(RochaMineral *nova_rocha, char *nova_data_coleta);
 
+//preenche_dados_rochas
+void preencher_rocha_mineral(RochaMineral *nova_rocha, Lista_de_minerais *nova_lista);
 // categoriza a rocha
 void classificar_rocha(RochaMineral *nova_rocha, Lista_de_minerais *nova_lista);
 // imprime rocha mineral

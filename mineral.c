@@ -5,7 +5,7 @@
 
 //inicializa o TAD e permite que o usuário insira os dados como quiser.
 
-void inicializar_mineral(Mineral* mine, const char* Nome, double Dureza, double Reatividade, CORM Cor){
+void inicializar_mineral(Mineral* mine, char* Nome, double Dureza, double Reatividade, CORM Cor){
     if ((strcmp(Nome, "Ferrolita") != 0 && strcmp(Nome, "Calaris") != 0 &&
          strcmp(Nome, "Solarium") != 0 && strcmp(Nome, "Aquavitae") != 0 &&
          strcmp(Nome, "Terranita") != 0) ||
@@ -23,7 +23,7 @@ void inicializar_mineral(Mineral* mine, const char* Nome, double Dureza, double 
 
 //uso do switch aqui para preencher por completo o TAD Mineral com o input apenas do valor para nome.
 
-void set_mineral(Mineral* mine, const char* nome1){
+void set_mineral(Mineral* mine, char* nome1){
     set_nome(mine,nome1);
     if (strcmp(nome1, "Ferrolita") == 0)
     {
@@ -62,18 +62,18 @@ void set_mineral(Mineral* mine, const char* nome1){
 }
 
 //função para  pedir ao usuário o número que corresponde ao mineral encontrado.
-void set_nome(Mineral *mine, const char *nome) 
+void set_nome(Mineral *mine, char *nome) 
 {
-    strncpy(mine->Nome, nome, sizeof(mine->Nome) - 1);
+    strncpy(mine->Nome, nome, strlen(mine->Nome));
 }
 
 //função para imprimir o nome.
-void get_nome(Mineral* mine){
+char* get_nome(Mineral* mine){
     printf("%s\n", mine->Nome);
 }
 
 //função para imprimir dados numéricos.
-void get_num_data(Mineral* mine){
+double get_num_data(Mineral* mine){
     printf("Dureza:%.1f\n", mine->Dureza);
     printf("Reatividade:%.1f\n", mine->Reatividade);
 }

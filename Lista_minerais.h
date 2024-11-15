@@ -1,6 +1,8 @@
+#ifndef LISTA_MINERAIS_H_
+#define LISTA_MINERAIS_H_
+
 #include "mineral.h"
-#include <stdio.h>
-#include <stdlib.h>
+
 #define PMAX 3
 
 typedef struct {
@@ -18,3 +20,5 @@ void insere_mineral(Lista_de_minerais* lista, char* name);
 void imprime_lista(Lista_de_minerais* lista);
 //esvazia a lista
 void limpeza(Lista_de_minerais* lista);
+
+#endif

@@ -22,7 +22,7 @@ void imprime_lista(Lista_de_minerais* lista){
         printf("%s\n", lista->Lminerais[i].Nome);
         printf("Dureza: %.1f\n", lista->Lminerais[i].Dureza);
         printf("Reatividade: %.1f\n", lista->Lminerais[i].Reatividade);
-        printf("Cor: %s\n", tranformacor(lista->Lminerais[i].Cor));
+        printf("Cor: %d\n", lista->Lminerais[i].Cor);
         printf("--------------\n");
     }
 }
