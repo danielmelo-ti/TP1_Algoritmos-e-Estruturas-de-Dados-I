@@ -27,30 +27,35 @@ void set_mineral(Mineral* mine, char* nome1){
     set_nome(mine,nome1);
     if (strcmp(nome1, "Ferrolita") == 0)
     {
+        strcpy(mine->Nome, "Ferrolita");
         mine->Dureza = 0.5;
         mine->Reatividade = 0.7;
         mine->Cor = ACINZENTADO;
     }
     else if (strcmp(nome1, "Solarium") == 0)
     {
+        strcpy(mine->Nome, "Solarium");
         mine->Dureza = 0.9;
         mine->Reatividade = 0.2;
         mine->Cor = AMARELO;
     }
     else if (strcmp(nome1, "Aquavitae") == 0)
     {
+        strcpy(mine->Nome, "Aquavitae");
         mine->Dureza = 0.5;
         mine->Reatividade = 0.8;
         mine->Cor = AZULADO;
     }
     else if (strcmp(nome1, "Terranita") == 0)
     {
+        strcpy(mine->Nome, "Terranita");
         mine->Dureza = 0.7;
         mine->Reatividade = 0.6;
         mine->Cor = MARROM;
     }
     else if (strcmp(nome1, "Calaris") == 0)
     {
+        strcpy(mine->Nome, "Calaris");
         mine->Dureza = 0.6;
         mine->Reatividade = 0.5;
         mine->Cor = VERMELHO;

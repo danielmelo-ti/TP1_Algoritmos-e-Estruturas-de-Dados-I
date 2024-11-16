@@ -19,10 +19,10 @@ void imprime_lista(Lista_de_minerais* lista){
     //uso de ponteiro para permitir impressão mais fácil dos valores, sem necessidade de switch case
     for (int i = 0; i < lista->ultimo; i++)
     {
-        printf("%s\n", lista->Lminerais[i].Nome);
+        printf("Nome: %s\n", lista->Lminerais[i].Nome);
         printf("Dureza: %.1f\n", lista->Lminerais[i].Dureza);
         printf("Reatividade: %.1f\n", lista->Lminerais[i].Reatividade);
-        printf("Cor: %d\n", lista->Lminerais[i].Cor);
+        get_cor(&lista->Lminerais[i]);
         printf("--------------\n");
     }
 }

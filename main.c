@@ -10,6 +10,7 @@ int main() {
     Lista_de_minerais lista_minerais;
     inicializa_lista(&lista_minerais);
     preencher_rocha_mineral(&r1, &lista_minerais); // Passando a lista para preencher os minerais
+    imprime_lista(&lista_minerais);
     imprimir_rocha_mineral(&r1); // Imprime as informações da rocha
     return 0;
 }
