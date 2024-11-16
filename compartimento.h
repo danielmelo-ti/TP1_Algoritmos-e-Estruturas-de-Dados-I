@@ -1,17 +1,27 @@
-#ifndef COMPARTIMENTO_H_
-#define COMPARTIMENTO_H_
-
+#ifndef COMPARTIMENTO_H
+#define COMPARTIMENTO_H
 #include "rocha_mineral.h"
 
-//cria a lista vazia
-void inicializa_compartimento(Lista_de_minerais* lista);
-//retira um mineral pelo nome
-void retira_mineral(Lista_de_minerais* lista, MINERIO Tnome);
-//insere um mineral no final da lista
-void insere_mineral(Lista_de_minerais* lista, Mineral mine);
-//imprime todos os componentes da lista
-void imprime_lista(Lista_de_minerais* lista);
-//esvazia a lista
-void limpeza(Lista_de_minerais* lista);
+typedef struct Celula
+{
+    RochaMineral rocha;
+    struct Celula *pProx;
+}Celula;
 
-#endif
+typedef struct Compartimento
+{
+    float pesoMAX;
+    Celula *pPrimeiro;
+    Celula *pUltimo;
+}Compartimento;
+
+void FListaRochaM(Compartimento *LRM, int pesoMAX);
+int LEhVaziaRochaM(Compartimento *LRM);
+double PesoAtual(Compartimento *LRM);
+int InsereRochaM(Compartimento *LRM, RochaMineral RochaM, int pesoMAX);
+int RmoveRochaM(Compartimento *LRM, int posicao, RochaMineral RochaM);
+int TrocaRochaM(Compartimento *LRM, RochaMineral RochaM, int pesoMAX);
+void ImprimeListaRochaM(Compartimento *LRM);
+
+ 
+#endif //COMPARTIMENTO_H

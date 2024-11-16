@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "sonda.h": "c"
+        "sonda.h": "c",
+        "lista_minerais.h": "c",
+        "rocha_mineral.h": "c",
+        "string.h": "c",
+        "stdio.h": "c",
+        "compartimento.h": "c"
     }
 }

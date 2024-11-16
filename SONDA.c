@@ -9,15 +9,12 @@ void set_IDENTIFICADOR(Sonda* sonda, int id)
     sonda->Identificador = id;
 }
 
-//COMPARTIMENTO NÃO DEFINIDO!
-//void set_COMPARTIMENTO(Sonda* sonda)
-
 void set_VELOCIDADE(Sonda* sonda, int velo){
-    sonda->Velocidade = velo;
+    sonda->velocidade = velo;
 }
 
 void set_COMBUSTIVEL(Sonda* sonda, int combus){
-    sonda->Combustivel = combus;
+    sonda->combustivel = combus;
 }
 
 void set_LOCALIZACAO(Sonda* sonda, Localizacao coordenada)
@@ -35,16 +32,13 @@ int get_IDENTIFICADOR(Sonda* sonda)
 {
     return (sonda->Identificador);
 }
-//COMPARTIMENTO NÃO DEFINIDO!
-//Compartimento get_COMPARTIMENTO(Sonda* sonda)
-int get_VELOCIDADE(Sonda* sonda){
-    return (sonda->Velocidade);
-}
 
-int get_COMBUSTIVEL(Sonda* sonda){
-    return (sonda->Combustivel);
+void get_VELOCIDADE(Sonda* sonda){
+    return (sonda->velocidade);
 }
-
+void get_COMBUSTIVEL(Sonda* sonda){
+    return (sonda->combustivel);
+}
 Localizacao get_LOCALIZACAO(Sonda* sonda)
 {
     return (sonda->coordenadas);
@@ -56,15 +50,14 @@ EstaLigada get_ESTALIGADA(Sonda* sonda)
 
 
 //Função para iniciar a sonda (SEM rocha mineral, ou seja, COMPARTIMENTO VAZIO, e inicialmente DESLIGADA)
-void Inicializar(Sonda* sonda, int id, int velo, int combus, Localizacao coordenada, EstaLigada modo)
+void Inicializar(Sonda* sonda, int id, int velo, int combus, int PesoMax, Localizacao coordenada, EstaLigada modo)
 {
     set_IDENTIFICADOR(sonda, id);
-    //COMPARTIMENTO NÃO DEFINIDO!
-    //set_COMPARTIMENTO();
     set_VELOCIDADE(sonda, velo);
     set_COMBUSTIVEL(sonda, combus);
+    FListaRochaM(&sonda->CompSonda, PesoMax);
     set_LOCALIZACAO(sonda, coordenada);
-    set_ESTALIGADA(sonda, 0);
+    set_ESTALIGADA(sonda, modo);
 }
 //Função para LIGAR sonda
 void LigarSonda(Sonda* sonda) {
