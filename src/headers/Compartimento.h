@@ -10,17 +10,17 @@ typedef struct Celula
 
 typedef struct Compartimento
 {
-    float PesoMax;
+    float pesoMAX;
     Celula *pPrimeiro;
     Celula *pUltimo;
 }Compartimento;
 
-void FListaRochaM(Compartimento *LRM);
+void FListaRochaM(Compartimento *LRM, int pesoMAX);
 int LEhVaziaRochaM(Compartimento *LRM);
 double PesoAtual(Compartimento *LRM);
-int InsereRochaM(Compartimento *LRM, RochaMineral RochaM, int PesoMax);
+int InsereRochaM(Compartimento *LRM, RochaMineral RochaM, int pesoMAX);
 int RmoveRochaM(Compartimento *LRM, int posicao, RochaMineral RochaM);
-int TrocaRochaM(Compartimento *LRM, RochaMineral RochaM, int PesoMax);
+int TrocaRochaM(Compartimento *LRM, RochaMineral RochaM, int pesoMAX);
 void ImprimeListaRochaM(Compartimento *LRM);
 
  

@@ -3,11 +3,13 @@
 #include <string.h>
 #include "Compartimento.h"
 
-void FListaRochaM(Compartimento *LRM){
+void FListaRochaM(Compartimento *LRM, int pesoMAX){
     LRM->pPrimeiro = (Celula*)malloc(sizeof(Celula));
     LRM->pUltimo = LRM->pPrimeiro;
     LRM->pPrimeiro->pProx = NULL;
+    LRM->PesoMax = pesoMAX;
 }
+
 int LEhVaziaRochaM(Compartimento *LRM){
     return(LRM->pPrimeiro == LRM->pUltimo);
 }
