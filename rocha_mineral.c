@@ -104,23 +104,9 @@ void preencher_rocha_mineral(RochaMineral *nova_rocha, Lista_de_minerais *nova_l
     Localizacao_rocha localizacao;
     char data_coleta[255];  // buffer local para armazenar a data
 
-    char mineral_entrada[255];
+    char entrada_dados[255];
 
     id = rand() % 100;
-
-    // Entrada de localização
-    printf("Insira a localizacao: (Latitude e Longitude) ");
-    scanf("%f %f", &localizacao.Latitude, &localizacao.Longitude);
-
-    // Consome a quebra de linha residual do scanf anterior
-    getchar(); // Essa linha consome a quebra de linha (\n) que o scanf deixou no buffer
-
-    // Entrada de peso
-    printf("Insira o peso: ");
-    scanf("%f", &peso);
-
-    // Consome a quebra de linha residual do scanf anterior
-    getchar(); // Consome a quebra de linha (\n) deixada pelo scanf
 
     // Geração da data de coleta
     time_t t = time(NULL);
@@ -141,18 +127,29 @@ void preencher_rocha_mineral(RochaMineral *nova_rocha, Lista_de_minerais *nova_l
              data_hora_atual.tm_min,               // Minutos
              data_hora_atual.tm_sec);              // Segundos
 
-    // Lê a linha de minerais
-    printf("Insira os minerais (separados por espaco): ");
-    fgets(mineral_entrada, 255, stdin);
+    printf("Insira os dados da rocha: ");
+    fgets(entrada_dados, sizeof(entrada_dados), stdin);  // Lê tudo em uma única linha
 
     // Remove a quebra de linha, se houver
-    size_t len = strlen(mineral_entrada);
-    if (len > 0 && mineral_entrada[len - 1] == '\n') {
-        mineral_entrada[len - 1] = '\0';
+    size_t len = strlen(entrada_dados);
+    if (len > 0 && entrada_dados[len - 1] == '\n') {
+        entrada_dados[len - 1] = '\0';
     }
 
-    // Utiliza strtok para dividir a string com base no espaço
-    char *mineral1 = strtok(mineral_entrada, " ");
+    // Usando strtok para dividir os dados na linha
+    char *token = strtok(entrada_dados, " ");
+    
+    // Lê a localização (latitude e longitude)
+    localizacao.Latitude = atof(token);  // Converte para float
+    token = strtok(NULL, " ");
+    localizacao.Longitude = atof(token);  // Converte para float
+    
+    // Lê o peso
+    token = strtok(NULL, " ");
+    peso = atoi(token);  // Converte para int
+    
+    // Lê os minerais (assumindo até 3 minerais)
+    char *mineral1 = strtok(NULL, " ");
     char *mineral2 = strtok(NULL, " ");
     char *mineral3 = strtok(NULL, " ");
 

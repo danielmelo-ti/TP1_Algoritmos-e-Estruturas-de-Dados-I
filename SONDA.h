@@ -54,4 +54,6 @@ void LigarSonda(Sonda* sonda);
 void DesligarSonda(Sonda* sonda);
 //Função para MOVER sonda
 void MoverSonda(Sonda* sonda, Localizacao novaCoordenada);
+//Funcao para preencher dados da sonda
+void preencher_dados_sonda(Sonda *sonda);
 #endif // SONDA_H_INCLUDED
