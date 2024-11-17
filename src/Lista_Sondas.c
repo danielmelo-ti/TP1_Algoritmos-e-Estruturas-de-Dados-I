@@ -44,6 +44,7 @@ int RetiraSondaLS(Lista_Sondas *LS, int id, Sonda s){
     }
     return 0; //id não encontrado
 }
+
 void ImprimeLS(Lista_Sondas *LS){
     while (LS->pUltimo->pProx != NULL)
     {

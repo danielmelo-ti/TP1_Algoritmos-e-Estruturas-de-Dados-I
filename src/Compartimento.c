@@ -3,11 +3,11 @@
 #include <string.h>
 #include "Compartimento.h"
 
-void FListaRochaM(Compartimento *LRM, int pesoMAX){
+void FListaRochaM(Compartimento *LRM, float pesoMAX){
     LRM->pPrimeiro = (Celula*)malloc(sizeof(Celula));
     LRM->pUltimo = LRM->pPrimeiro;
     LRM->pPrimeiro->pProx = NULL;
-    LRM->PesoMax = pesoMAX;
+    LRM->pesoMAX = pesoMAX;
 }
 
 int LEhVaziaRochaM(Compartimento *LRM){
@@ -29,7 +29,7 @@ double PesoAtual(Compartimento *LRM){
     return peso;
 }
 
-int InsereRochaM(Compartimento *LRM, RochaMineral *RochaM, int PesoMax){   
+int InsereRochaM(Compartimento *LRM, RochaMineral *RochaM, float PesoMax){   
     int peso = PesoAtual(LRM);
     peso += (RochaM->peso);
     if (peso>PesoMax)

@@ -15,12 +15,12 @@ typedef struct Compartimento
     Celula *pUltimo;
 }Compartimento;
 
-void FListaRochaM(Compartimento *LRM, int pesoMAX);
+void FListaRochaM(Compartimento *LRM, float pesoMAX);
 int LEhVaziaRochaM(Compartimento *LRM);
 double PesoAtual(Compartimento *LRM);
-int InsereRochaM(Compartimento *LRM, RochaMineral RochaM, int pesoMAX);
+int InsereRochaM(Compartimento *LRM, RochaMineral RochaM, float pesoMAX);
 int RmoveRochaM(Compartimento *LRM, int posicao, RochaMineral RochaM);
-int TrocaRochaM(Compartimento *LRM, RochaMineral RochaM, int pesoMAX);
+int TrocaRochaM(Compartimento *LRM, RochaMineral RochaM, float pesoMAX);
 void ImprimeListaRochaM(Compartimento *LRM);
 
  
