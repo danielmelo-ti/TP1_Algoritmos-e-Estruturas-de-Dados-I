@@ -2,16 +2,16 @@
 #define LISTA_SONDAS_H
 #include "SONDA.h"
 
-typedef struct Celula
+typedef struct CelulaLS
 {
     Sonda sonda;
-    struct Celula *pProx;
-}Celula;
+    struct CelulaLS *pProx;
+}CelulaLS;
 
 typedef struct Lista_Sondas
 {
-    Celula* pPrimeiro;
-    Celula* pUltimo;
+    CelulaLS* pPrimeiro;
+    CelulaLS* pUltimo;
 }Lista_Sondas;
 
 void FLVaziaLS(Lista_Sondas *LS);

@@ -40,8 +40,8 @@ void set_ESTALIGADA(Sonda* sonda, EstaLigada modo);
 int get_IDENTIFICADOR(Sonda* S);
 //COMPARTIMENTO NÃO DEFINIDO!
 //Compartimento get_COMPARTIMENTO(Sonda* sonda);
-void get_VELOCIDADE(Sonda* sonda);
-void get_COMBUSTIVEL(Sonda* sonda);
+int get_VELOCIDADE(Sonda* sonda);
+int get_COMBUSTIVEL(Sonda* sonda);
 Localizacao get_LOCALIZACAO(Sonda* sonda);
 EstaLigada get_ESTALIGADA(Sonda* sonda);
 

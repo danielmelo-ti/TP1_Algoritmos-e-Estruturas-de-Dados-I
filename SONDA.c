@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "SONDA.h"
 
@@ -33,10 +34,10 @@ int get_IDENTIFICADOR(Sonda* sonda)
     return (sonda->Identificador);
 }
 
-void get_VELOCIDADE(Sonda* sonda){
+int get_VELOCIDADE(Sonda* sonda){
     return (sonda->velocidade);
 }
-void get_COMBUSTIVEL(Sonda* sonda){
+int get_COMBUSTIVEL(Sonda* sonda){
     return (sonda->combustivel);
 }
 Localizacao get_LOCALIZACAO(Sonda* sonda)

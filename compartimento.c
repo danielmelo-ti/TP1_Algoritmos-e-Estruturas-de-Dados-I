@@ -4,7 +4,7 @@
 #include "Compartimento.h"
 
 void FListaRochaM(Compartimento *LRM, int pesoMAX){
-    LRM->pPrimeiro = (Celula*)malloc(sizeof(Celula));
+    LRM->pPrimeiro = (CelulaC*)malloc(sizeof(CelulaC));
     LRM->pUltimo = LRM->pPrimeiro;
     LRM->pPrimeiro->pProx = NULL;
     LRM->pesoMAX = pesoMAX;
@@ -20,7 +20,7 @@ double PesoAtual(Compartimento *LRM){
         return 0;
     }
 
-    Celula *pAux;
+    CelulaC *pAux;
     
     for(pAux = LRM->pPrimeiro->pProx; pAux != NULL; pAux = pAux->pProx)
     {
@@ -36,7 +36,7 @@ int InsereRochaM(Compartimento *LRM, RochaMineral *RochaM, int PesoMax){
     {
         return 0;
     }
-    LRM->pUltimo->pProx = (Celula*) malloc(sizeof(Celula));
+    LRM->pUltimo->pProx = (CelulaC*) malloc(sizeof(CelulaC));
     LRM->pUltimo = LRM->pUltimo->pProx;
     LRM->pUltimo->rocha = *RochaM;
     LRM->pUltimo->pProx = NULL;
@@ -48,9 +48,9 @@ int RmoveRochaM(Compartimento *LRM, int posicao, RochaMineral RochaM){
 }
 
 int TrocaRochaM(Compartimento *LRM, RochaMineral *RochaM, int PesoMax){
-    Celula *pAux;
+    CelulaC *pAux;
     pAux = LRM->pPrimeiro->pProx;
-    while (strcmp(pAux->rocha.categoria, RochaM->categoria) != 0)
+    while (pAux->rocha.categoria != RochaM->categoria)
     {
         pAux = pAux->pProx;
     }
@@ -58,7 +58,7 @@ int TrocaRochaM(Compartimento *LRM, RochaMineral *RochaM, int PesoMax){
 }
 
 void ImprimeListaRochaM(Compartimento *LRM){
-    Celula *pAux;
+    CelulaC *pAux;
     pAux = LRM->pPrimeiro->pProx;
     while (pAux != NULL)
     {
