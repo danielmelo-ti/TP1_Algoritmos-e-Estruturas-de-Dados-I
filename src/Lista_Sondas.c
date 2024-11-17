@@ -3,7 +3,7 @@
 #include "Lista_Sondas.h"
 
 void FLVaziaLS(Lista_Sondas *LS){
-    LS->pPrimeiro = (Celula*)malloc(sizeof(Celula));
+    LS->pPrimeiro = (CelulaLS*)malloc(sizeof(CelulaLS));
     LS->pUltimo = LS->pPrimeiro;
     LS->pPrimeiro->pProx = NULL;
 }
@@ -13,7 +13,7 @@ int LEhVaziaLS(Lista_Sondas *LS){
 }
 
 int InsereSondaLS(Lista_Sondas *LS, Sonda *s){
-    LS->pPrimeiro->pProx = (Celula*)malloc(sizeof(Celula));
+    LS->pPrimeiro->pProx = (CelulaLS*)malloc(sizeof(CelulaLS));
     LS->pUltimo = LS->pPrimeiro->pProx;
     LS->pUltimo->sonda = *s;
     LS->pUltimo->pProx = NULL;
@@ -21,8 +21,8 @@ int InsereSondaLS(Lista_Sondas *LS, Sonda *s){
 }
 
 int RetiraSondaLS(Lista_Sondas *LS, int id, Sonda s){
-    Celula *pAnt = LS->pPrimeiro;
-    Celula *pAtual = LS->pPrimeiro->pProx;
+    CelulaLS *pAnt = LS->pPrimeiro;
+    CelulaLS *pAtual = LS->pPrimeiro->pProx;
 
     while (pAtual != NULL)
     {
@@ -45,9 +45,52 @@ int RetiraSondaLS(Lista_Sondas *LS, int id, Sonda s){
     return 0; //id não encontrado
 }
 
-void ImprimeLS(Lista_Sondas *LS){
-    while (LS->pUltimo->pProx != NULL)
-    {
-        // IMPLEMENTAR ESSA FUNÇÃO
+void ImprimeLS(Lista_Sondas *LS) {
+    CelulaLS *pAtual = LS->pPrimeiro->pProx;  // Ponteiro para o primeiro elemento válido da lista
+    int cnt = 1;
+
+    while (pAtual != NULL) {
+        printf("Sonda %d:\n", cnt);
+
+        // Verifica se o compartimento da sonda tem rochas
+        if (LEhVaziaRochaM(&pAtual->sonda.CompSonda)) {
+            printf("  Compartimento vazio\n");
+        } else {
+            // Imprime as rochas no compartimento
+            CelulaC *pRocha = pAtual->sonda.CompSonda.pPrimeiro->pProx;  // Inicia do primeiro elemento válido
+            while (pRocha != NULL) {
+                // Imprime a categoria e o peso de cada rocha
+                printf("  Rocha: %s, Peso: %.2f\n", pRocha->rocha.categoria, pRocha->rocha.peso);
+                pRocha = pRocha->pProx;  // Avança para a próxima rocha
+            }
+        }
+
+        pAtual = pAtual->pProx;  // Avança para a próxima sonda
+        cnt++;
     }
 }
+
+// void ImprimeLS(Lista_Sondas *LS){
+//     CelulaLS *pAtual = LS->pPrimeiro->pProx;
+//     int cnt = 1;
+//     while (pAtual != NULL)
+//     {
+//         printf("%d\n", cnt);
+//         printf("%s %d\n", pAtual->sonda.CompSonda.pPrimeiro->rocha.categoria, pAtual->sonda.CompSonda.pPrimeiro->rocha.peso);
+//         pAtual = pAtual->pProx;
+//         cnt++;
+//     }
+// }
+
+/*
+void ImprimeLS(Lista_Sondas *LS){
+    int cnt = 1;
+    while (LS->pUltimo->pProx != NULL)
+    {
+        printf("%d\n", cnt);
+        printf("%d\n", LS->pPrimeiro->pProx);
+        LS->pPrimeiro->pProx->pProx;
+        cnt++;
+    }
+}
+*/

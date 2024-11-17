@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "SONDA.h"
 
@@ -33,10 +34,10 @@ int get_IDENTIFICADOR(Sonda* sonda)
     return (sonda->Identificador);
 }
 
-void get_VELOCIDADE(Sonda* sonda){
+int get_VELOCIDADE(Sonda* sonda){
     return (sonda->velocidade);
 }
-void get_COMBUSTIVEL(Sonda* sonda){
+int get_COMBUSTIVEL(Sonda* sonda){
     return (sonda->combustivel);
 }
 Localizacao get_LOCALIZACAO(Sonda* sonda)
@@ -76,4 +77,50 @@ void MoverSonda(Sonda* sonda, Localizacao novaCoordenada)
 {
     sonda->coordenadas = novaCoordenada;
     printf("Sonda movida para o local escolhido!\n");
+}
+
+void preencher_dados_sonda(Sonda *sonda){
+    int id;
+    int velo;
+    int combus;
+    int pesoMAX;
+    Localizacao coordenada;
+    EstaLigada modo;
+
+    char buffer[100];
+
+    id = rand() % 100;
+
+    printf("Insira os dados da sonda: ");
+    fgets(buffer, sizeof(buffer), stdin);
+
+    // Remove a quebra de linha, se houver
+    size_t len = strlen(buffer);
+    if (len > 0 && buffer[len - 1] == '\n') {
+        buffer[len - 1] = '\0';
+    }
+
+    // Usando strtok para dividir os dados na linha
+    char *token = strtok(buffer, " ");
+    
+    // Lê a localização (latitude e longitude)
+    coordenada.Latitude = atof(token);
+    token = strtok(NULL, " ");
+    coordenada.Longitude = atof(token);
+    
+    // Lê o peso maximo (capacidade maxima)
+    token = strtok(NULL, " ");
+    pesoMAX = atoi(token);
+    
+    // Lê a velo
+    token = strtok(NULL, " ");
+    velo = atoi(token);
+
+    // Lê o nivel de combustivel
+    token = strtok(NULL, " ");
+    combus = atoi(token);
+
+    modo = DESLIGADA;
+
+    Inicializar(sonda, id, velo, combus, pesoMAX, coordenada, modo);
 }

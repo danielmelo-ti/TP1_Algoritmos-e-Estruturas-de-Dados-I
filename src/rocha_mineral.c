@@ -1,39 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <locale.h> // Necessária para utilizar o português no código
-#include <time.h> // Necessária para puxar data e hora atuais para o código
+#include <time.h>
 
-#include "mineral.h"
 #include "rocha_mineral.h"
-#include "lista_minerais.h"
-
-setlocale(LC_ALL, "pt_BR.UTF-8"); // Configura o programa para usar a localidade portuguesa
 
 // Inicializar nova rocha
-void inicializar_rocha_mineral(RochaMineral *nova_rocha, int novo_id, float novo_peso, ListaMinerais nova_lista, Categoria nova_categoria, float nova_localizacao, char *nova_data_coleta){
+void inicializar_rocha_mineral(RochaMineral *nova_rocha, int novo_id, float novo_peso, Lista_de_minerais *nova_lista, Localizacao_rocha nova_localizacao, char *nova_data_coleta){
     set_id(nova_rocha, novo_id);
     set_peso(nova_rocha, novo_peso);
-    set_lista(nova_rocha, nova_lista);
-    set_categoria(nova_rocha, nova_categoria);
     set_localizacao(nova_rocha, nova_localizacao);
     set_data_coleta(nova_rocha, nova_data_coleta);
+    classificar_rocha(nova_rocha, nova_lista);
 }
 
 // Início dos gets
-char get_id(RochaMineral *nova_rocha){
+int get_id(RochaMineral *nova_rocha){
     return(nova_rocha->id);
 }
 float get_peso(RochaMineral *nova_rocha){
     return(nova_rocha->peso);
 }
-ListaMinerais get_lista(RochaMineral *nova_rocha){
-    return(nova_rocha->lista);
-}
-Categoria get_categoria(RochaMineral *nova_rocha){
-    return(nova_rocha->categoria);
-}
-float get_localizacao(RochaMineral *nova_rocha){
+Localizacao_rocha get_localizacao(RochaMineral *nova_rocha){
     return(nova_rocha->localizacao);
 }
 char *get_data_coleta(RochaMineral *nova_rocha){
@@ -48,120 +36,180 @@ void set_id(RochaMineral *nova_rocha, int novo_id){
 void set_peso(RochaMineral *nova_rocha, float novo_peso){
     nova_rocha->peso = novo_peso;
 }
-void set_lista(RochaMineral *nova_rocha, ListaMinerais nova_lista){
-    nova_rocha->lista = nova_lista;
-}
-void set_categoria(RochaMineral *nova_rocha, Categoria nova_categoria){
-    nova_rocha->categoria = nova_categoria;
-}
-void set_localizacao(RochaMineral *nova_rocha, float nova_localizacao){
+void set_localizacao(RochaMineral *nova_rocha, Localizacao_rocha nova_localizacao){
     nova_rocha->localizacao = nova_localizacao;
 }
 void set_data_coleta(RochaMineral *nova_rocha, char *nova_data_coleta){
-    nova_rocha->data_coleta = nova_data_coleta;
+    strcpy(nova_rocha->data_coleta, nova_data_coleta);
 }
-// Fim dos sets 
+// Fim dos sets
 
-// Função para preencher as informações do TAD RochaMineral
-void preencher_rocha_mineral(RochaMineral *nova_rocha){
-    float localizacao[2];
-
-    float peso;
-
-    char total_minerais[255];
+void classificar_rocha(RochaMineral *nova_rocha, Lista_de_minerais *nova_lista){
+    
     int Ferrolita = 0, Solarium = 0, Aquavitae = 0, Terranita = 0, Calaris = 0;
 
-    srand(time(NULL)); //usado para que o código veja o horário do pc e 
-    int id = rand() % 100;
-
-    ListaMinerais lista;
-
-    char data_coleta[255];
-
-    printf("O ID da rocha mineral é: %d", id);
-    printf("Insira a latitude e a longitude: ");
-    scanf("%f %f", &localizacao[0], &localizacao[1]);
-    printf("Insira o peso da rocha mineral: ");
-    scanf("%f", &peso);
-    printf("Insira os minerais presentes na rocha: ");
-
-    /* colocar aqui o scanf para pegar os minerais e mandalos para a lista presente no TAD RochaMineral */
-
     for (int i = 0; i < 3; i++) {
-        if (scanf("%19s", nova_rocha->lista[i]) == EOF) break;
-    }
-
-    for (int i = 0; i < 3; i++){
-        if (strcmp(nova_rocha->lista[i], "Ferrolita") == 0){
+        if (strcmp(nova_lista->Lminerais[i].Nome, "Ferrolita") == 0){
             Ferrolita += 1;
         }
-        if (strcmp(nova_rocha->lista[i], "Solarium") == 0){
+        if (strcmp(nova_lista->Lminerais[i].Nome, "Solarium") == 0) {
             Solarium += 1;
         }
-        if (strcmp(nova_rocha->lista[i], "Aquavitae") == 0){
+        if (strcmp(nova_lista->Lminerais[i].Nome, "Aquavitae") == 0) {
             Aquavitae += 1;
         }
-        if (strcmp(nova_rocha->lista[i], "Terranita") == 0){
+        if (strcmp(nova_lista->Lminerais[i].Nome, "Terranita") == 0) {
             Terranita += 1;
         }
-        if (strcmp(nova_rocha->lista[i], "Calaris") == 0){
+        if (strcmp(nova_lista->Lminerais[i].Nome, "Calaris") == 0) {
             Calaris += 1;
         }
     }
 
-    if (Ferrolita && !Solarium && !Aquavitae && !Terranita && !Calaris){
-        strcpy(nova_rocha->categoria, "Ferrom");
+    if (Ferrolita == 1 && Solarium == 0 && Aquavitae == 0 && Terranita == 0 && Calaris == 0) {
+        nova_rocha->categoria = Ferrom;
     }
-    if (Solarium && !Ferrolita && !Aquavitae && !Terranita && !Calaris){
-        strcpy(nova_rocha->categoria, "Solaris");
+    else if (Solarium == 1 && Ferrolita == 0 && Aquavitae == 0 && Terranita == 0 && Calaris == 0){
+        nova_rocha->categoria = Solaris;
     }
-    if (Ferrolita && Aquavitae && !Solarium && !Terranita && !Calaris){
-        strcpy(nova_rocha->categoria, "Aquaferro");
+    else if (Ferrolita == 1 && Aquavitae == 1 && Solarium == 0 && Terranita == 0 && Calaris == 0){
+        nova_rocha->categoria = Aquaferro;
     }
-    if (Terranita && Calaris && !Ferrolita && !Aquavitae && !Solarium){
-        strcpy(nova_rocha->categoria, "Terrolis");
+    else if (Terranita == 1 && Calaris == 1 && Ferrolita == 0 && Aquavitae == 0 && Solarium == 0){
+        nova_rocha->categoria = Terrolis;
     }
-    if (Terranita && Solarium && !Ferrolita && !Aquavitae && !Calaris){
-        strcpy(nova_rocha->categoria, "Terrasol");
+    else if (Terranita == 1 && Solarium == 1 && Ferrolita == 0 && Aquavitae== 0 && Calaris == 0){
+        nova_rocha->categoria = Terrasol;
     }
-    if (Aquavitae && Terranita && !Ferrolita && !Solarium && !Calaris){
-        strcpy(nova_rocha->categoria, "Aquaterra");
+    else if (Aquavitae == 1 && Terranita == 1 && Ferrolita == 0 && Solarium == 0 && Calaris == 0){
+        nova_rocha->categoria = Aquaterra;
     }
-    if (Calaris && Aquavitae && !Ferrolita && !Solarium && !Terranita){
-        strcpy(nova_rocha->categoria, "Calquer");
+    else if (Calaris == 1 && Aquavitae == 1 && Ferrolita == 0 && Solarium == 0 && Terranita == 0){
+        nova_rocha->categoria = Calquer;
     }
-    if (Solarium && Ferrolita && !Aquavitae && !Terranita && !Calaris){
-        strcpy(nova_rocha->categoria, "Solarisfer");
+    else if (Solarium == 1 && Ferrolita == 1 && Aquavitae == 0 && Terranita == 0 && Calaris == 0){
+        nova_rocha->categoria = Solarisfer;
     }
-    if (Terranita && Ferrolita && !Aquavitae && !Solarium && !Calaris){
-        strcpy(nova_rocha->categoria, "Terralis");
+    else if (Terranita == 1 && Ferrolita == 1 && Aquavitae == 0 && Solarium == 0 && Calaris == 0){
+        nova_rocha->categoria = Terralis;
     }
-    if (Aquavitae && Calaris && Ferrolita){
-        strcpy(nova_rocha->categoria, "Aquacalis");
+    else if (Aquavitae == 1 && Calaris == 1 && Ferrolita == 1){
+        nova_rocha->categoria = Aquacalis;
     }
+}
 
+void preencher_rocha_mineral(RochaMineral *nova_rocha, Lista_de_minerais *nova_lista){
+    int id = 0;
+    float peso = 0;
+    Localizacao_rocha localizacao;
+    char data_coleta[255];  // buffer local para armazenar a data
 
-    // Usado para definir data e hora que a rocha foi encontrada
+    char entrada_dados[255];
+
+    id = rand() % 100;
+
+    // Geração da data de coleta
     time_t t = time(NULL);
-    struct tm *data_hora_atual = localtime(&t);
+    struct tm data_hora_atual = *localtime(&t);
 
-    if (data_hora_atual->tm_hour - 3 < 0) {
-        int aux = data_hora_atual->tm_hour;
-        data_hora_atual->tm_hour = 24 + aux - 3;
+    // Ajuste de horário (se necessário)
+    if (data_hora_atual.tm_hour < 3) {
+        // Subtraindo 3 horas
+        data_hora_atual.tm_hour += 24 - 3;
     }
 
-    sprintf(data_coleta, "Dia: %02d, Mês: %02d, Ano: %d, Hora: %02d:%02d:%02d", data_hora_atual->tm_mday - 1, 
-            data_hora_atual->tm_mon + 1, data_hora_atual->tm_year + 1900, data_hora_atual->tm_hour, 
-            data_hora_atual->tm_min, data_hora_atual->tm_sec);
+    // Usando snprintf corretamente para formatar a data
+    snprintf(data_coleta, sizeof(data_coleta), "Dia: %02d, Mes: %02d, Ano: %d, Hora: %02d:%02d:%02d",
+             data_hora_atual.tm_mday,              // Dia atual
+             data_hora_atual.tm_mon + 1,           // Mês (1-12)
+             data_hora_atual.tm_year + 1900,       // Ano (1900 + tm_year)
+             data_hora_atual.tm_hour,              // Hora ajustada
+             data_hora_atual.tm_min,               // Minutos
+             data_hora_atual.tm_sec);              // Segundos
 
-    inicializar_rocha_mineral(nova_rocha,/*colocar outras infos*/);
+    printf("Insira os dados da rocha: ");
+    fgets(entrada_dados, sizeof(entrada_dados), stdin);  // Lê tudo em uma única linha
+
+    // Remove a quebra de linha, se houver
+    size_t len = strlen(entrada_dados);
+    if (len > 0 && entrada_dados[len - 1] == '\n') {
+        entrada_dados[len - 1] = '\0';
+    }
+
+    // Usando strtok para dividir os dados na linha
+    char *token = strtok(entrada_dados, " ");
+    
+    // Lê a localização (latitude e longitude)
+    localizacao.Latitude = atof(token);  // Converte para float
+    token = strtok(NULL, " ");
+    localizacao.Longitude = atof(token);  // Converte para float
+    
+    // Lê o peso
+    token = strtok(NULL, " ");
+    peso = atoi(token);  // Converte para int
+    
+    // Lê os minerais (assumindo até 3 minerais)
+    char *mineral1 = strtok(NULL, " ");
+    char *mineral2 = strtok(NULL, " ");
+    char *mineral3 = strtok(NULL, " ");
+
+    // Verifica se os minerais foram lidos corretamente
+    if (mineral1 != NULL) {
+        insere_mineral(nova_lista, mineral1);
+    }
+    if (mineral2 != NULL) {
+        insere_mineral(nova_lista, mineral2);
+    }
+    if (mineral3 != NULL) {
+        insere_mineral(nova_lista, mineral3);
+    }
+
+    // Inicializa a rocha mineral com os dados
+    inicializar_rocha_mineral(nova_rocha, id, peso, nova_lista, localizacao, data_coleta);
 }
 
 void imprimir_rocha_mineral(RochaMineral *nova_rocha){
-    printf("ID: %d\n", nova_rocha->id);
-    printf("PESO: %s\n", get_peso(nova_rocha));
-    printf("LISTA: %s\n", get_lista(nova_rocha));
-    printf("CATEGORIA: %s\n", get_categoria(nova_rocha));
-    printf("LOCALIZACAO: %d", get_localizacao(nova_rocha));
-    printf("DATA DA COLETA: %d", get_data_coleta(nova_rocha));
+
+    char categoria_imprimir[255];
+
+    switch (nova_rocha->categoria)
+    {
+    case Ferrom:
+        strcpy(categoria_imprimir, "Ferrom");
+        break;
+    case Solaris:
+        strcpy(categoria_imprimir, "Solaris");
+        break;
+    case Aquaferro:
+        strcpy(categoria_imprimir, "Aquaferro");
+        break;
+    case Terrolis:
+        strcpy(categoria_imprimir, "Terrolis");
+        break;
+    case Terrasol:
+        strcpy(categoria_imprimir, "Terrasol");
+        break;
+    case Aquaterra:
+        strcpy(categoria_imprimir, "Aquaterra");
+        break;
+    case Calquer:
+        strcpy(categoria_imprimir, "Calquer");
+        break;
+    case Solarisfer:
+        strcpy(categoria_imprimir, "Solarisfer");
+        break;
+    case Terralis:
+        strcpy(categoria_imprimir, "Terralis");
+        break;
+    case Aquacalis:
+        strcpy(categoria_imprimir, "Aquacalis");
+        break;
+    default: strcpy(categoria_imprimir, "Erro");
+        break;
+    }
+    printf("ID: %d", nova_rocha->id);
+    printf("\nCategoria: %s", categoria_imprimir);
+    printf("\nPeso: %f", nova_rocha->peso);
+    printf("\nLocalizacao: %f %f", nova_rocha->localizacao.Latitude, nova_rocha->localizacao.Longitude);
+    printf("\nData da coleta: %s", nova_rocha->data_coleta);
 }
