@@ -29,8 +29,6 @@ typedef struct Sonda
 
 //Funções SET
 void set_IDENTIFICADOR(Sonda* sonda, int Id);
-//COMPARTIMENTO NÃO DEFINIDO!
-//void set_COMPARTIMENTO(Sonda* sonda);
 void set_LOCALIZACAO(Sonda* sonda, Localizacao coordenada);
 void set_VELOCIDADE(Sonda* sonda, int velo);
 void set_COMBUSTIVEL(Sonda* sonda, int combus);
@@ -38,8 +36,6 @@ void set_ESTALIGADA(Sonda* sonda, EstaLigada modo);
 
 //Funções GET
 int get_IDENTIFICADOR(Sonda* S);
-//COMPARTIMENTO NÃO DEFINIDO!
-//Compartimento get_COMPARTIMENTO(Sonda* sonda);
 void get_VELOCIDADE(Sonda* sonda);
 void get_COMBUSTIVEL(Sonda* sonda);
 Localizacao get_LOCALIZACAO(Sonda* sonda);
