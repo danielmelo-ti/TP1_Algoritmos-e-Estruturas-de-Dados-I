@@ -13,13 +13,13 @@ void modo_entrada(){
     printf("2 - Leitura de arquivo\n");
     scanf("%d", &entrada);
     if(entrada == 1){
-        inicializar_sistema_controle_SA();
-    } else {
         inicializar_sistema_controle_CA();
+    } else {
+        inicializar_sistema_controle_I();
     }
 }
 
-void inicializar_sistema_controle_SA(){
+void inicializar_sistema_controle_CA(){
     int qnt_sondas;
     Sonda sonda_aux;
     int qnt_operacoes;
@@ -53,15 +53,54 @@ void inicializar_sistema_controle_SA(){
         if (strcmp(tipo_operacao, "R") == 0){
             preencher_rocha_mineral(&rocha_aux, &lista_minerais);
             InsereRochaM(&lista_rochas, &rocha_aux, 200);
-            ImprimeListaRochaM(&lista_rochas);
         }
         else if (strcmp(tipo_operacao, "I") == 0){
             ImprimeLS(&lista_sondas);
         }
         else if (strcmp(tipo_operacao, "E") == 0){
-            // Equilibra os pesos
+            // Redistribui
         }
     }
 }
 
-void Inicializar_sistema_controle_CA();
+void Inicializar_sistema_controle_I(){
+    int qnt_sondas;
+    Sonda sonda_aux;
+    int qnt_operacoes;
+    char tipo_operacao[10];
+    RochaMineral rocha_aux;
+    Lista_de_minerais lista_minerais;
+    Compartimento lista_rochas;
+    Lista_Sondas lista_sondas;
+
+    int operacao_interativo;
+    
+    int operacao_acabou = 1;
+
+    inicializa_lista(&lista_minerais);
+    FListaRochaM(&lista_rochas, 200);
+    FLVaziaLS(&lista_sondas);
+
+    while (operacao_acabou != 2){
+        printf("====================\n");
+        printf("1 - Coleta\n");
+        printf("2 - Impressao\n");
+        printf("3 - Redistribuicao\n");
+        printf("====================\n");
+        printf("O que deseja fazer: ");
+        scanf("%d", &operacao_interativo);
+        if (operacao_interativo == 1){
+            preencher_rocha_mineral(&rocha_aux, &lista_minerais);
+            InsereRochaM(&lista_rochas, &rocha_aux, 200);
+        }
+        else if (operacao_interativo == 2){
+            ImprimeLS(&lista_sondas);
+        }
+        else if (operacao_interativo == 3){
+            // Redistribui
+        }
+        printf("Procedimento realizado!\n");
+        printf("Deseja fazer nova operacao? (1 - SIM / 2 - NAO)\n");
+        scanf("%d", &operacao_acabou);
+    }
+}

@@ -2,8 +2,8 @@
 #define SISTEMA_CONTROLE_H
 #include "Lista_Sondas.h"
 
-void inicializar_sistema_controle_SA();
-void Inicializar_sistema_controle_CA();
+void inicializar_sistema_controle_CA();
+void Inicializar_sistema_controle_I();
 
 void modo_entrada();
 
