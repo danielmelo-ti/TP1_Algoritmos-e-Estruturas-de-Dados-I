@@ -47,7 +47,7 @@ EstaLigada get_ESTALIGADA(Sonda* sonda);
 
 
 //Função para iniciar a sonda (SEM rocha mineral, ou seja, COMPARTIMENTO VAZIO, e inicialmente DESLIGADA)
-void Inicializar(Sonda* sonda, int id, int velo, int combus, int pesoMAX, Localizacao coordenada, EstaLigada modo);
+void Inicializar(Sonda* sonda, int id, int velo, int combus, int pesoMAX, Localizacao coordenada, EstaLigada modo, Compartimento comp);
 //Função para LIGAR sonda
 void LigarSonda(Sonda* sonda);
 //Função para DESLIGAR sonda
@@ -55,5 +55,7 @@ void DesligarSonda(Sonda* sonda);
 //Função para MOVER sonda
 void MoverSonda(Sonda* sonda, Localizacao novaCoordenada);
 //Funcao para preencher dados da sonda
-void preencher_dados_sonda(Sonda *sonda);
+void preencher_dados_sonda(Sonda *sonda, Compartimento comp);
+//Funcao para identificar a sonda mais proxima da rocha em questao
+float distancia_sonda_rocha(Sonda *sonda, RochaMineral *rocha);
 #endif // SONDA_H_INCLUDED

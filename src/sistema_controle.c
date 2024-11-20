@@ -8,9 +8,9 @@
 int entrada;
 
 void modo_entrada(){
-    printf("Qual modo de entrada você deseja utilizar: \n");
-    printf("1 - Inserir dados no terminal\n");
-    printf("2 - Leitura de arquivo\n");
+    printf("Qual modo de entrada voce deseja utilizar: \n");
+    printf("1 - Leitura de arquivo\n");
+    printf("2 - Menu interativo\n");
     scanf("%d", &entrada);
     if(entrada == 1){
         inicializar_sistema_controle_CA();
@@ -30,7 +30,6 @@ void inicializar_sistema_controle_CA(){
     Lista_Sondas lista_sondas;
 
     inicializa_lista(&lista_minerais);
-    FListaRochaM(&lista_rochas, 200);
     FLVaziaLS(&lista_sondas);
 
     printf("Insira a quantidade de sondas usadas: ");
@@ -38,7 +37,7 @@ void inicializar_sistema_controle_CA(){
     getchar();
 
     for (int i = 0; i<qnt_sondas; i++){
-        preencher_dados_sonda(&sonda_aux);
+        preencher_dados_sonda(&sonda_aux, lista_rochas);
         InsereSondaLS(&lista_sondas, &sonda_aux);
     }
 
@@ -52,6 +51,7 @@ void inicializar_sistema_controle_CA(){
         getchar();
         if (strcmp(tipo_operacao, "R") == 0){
             preencher_rocha_mineral(&rocha_aux, &lista_minerais);
+            calcular_distancias(&lista_sondas, &rocha_aux);
             // TODO: funcao para pegar a sonda mais proxima
             // TODO: carrega_rocha (sonda mais proxima, rocha, 200)
         }

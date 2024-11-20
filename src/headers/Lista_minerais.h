@@ -16,6 +16,8 @@ void inicializa_lista(Lista_de_minerais* lista);
 int retira_mineral(Lista_de_minerais* lista, char* Tnome);
 //insere um mineral no final da lista
 void insere_mineral(Lista_de_minerais* lista, char* name);
+//obter categoria das rochas do compartimento
+// const char* obterCategoria(Categoria cat);
 //imprime todos os componentes da lista
 void imprime_lista(Lista_de_minerais* lista);
 //esvazia a lista

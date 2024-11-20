@@ -118,12 +118,12 @@ void preencher_rocha_mineral(RochaMineral *nova_rocha, Lista_de_minerais *nova_l
         data_hora_atual.tm_hour += 24 - 3;
     }
 
-    // Usando snprintf corretamente para formatar a data
+    // Usando snprintf para formatar a data
     snprintf(data_coleta, sizeof(data_coleta), "Dia: %02d, Mes: %02d, Ano: %d, Hora: %02d:%02d:%02d",
-             data_hora_atual.tm_mday,              // Dia atual
-             data_hora_atual.tm_mon + 1,           // Mês (1-12)
-             data_hora_atual.tm_year + 1900,       // Ano (1900 + tm_year)
-             data_hora_atual.tm_hour,              // Hora ajustada
+             data_hora_atual.tm_mday,              // Dia
+             data_hora_atual.tm_mon + 1,           // Mês
+             data_hora_atual.tm_year + 1900,       // Ano
+             data_hora_atual.tm_hour,              // Hora
              data_hora_atual.tm_min,               // Minutos
              data_hora_atual.tm_sec);              // Segundos
 

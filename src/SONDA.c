@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "headers/SONDA.h"
 
@@ -51,11 +52,12 @@ EstaLigada get_ESTALIGADA(Sonda* sonda)
 
 
 //Função para iniciar a sonda (SEM rocha mineral, ou seja, COMPARTIMENTO VAZIO, e inicialmente DESLIGADA)
-void Inicializar(Sonda* sonda, int id, int velo, int combus, int PesoMax, Localizacao coordenada, EstaLigada modo)
+void Inicializar(Sonda* sonda, int id, int velo, int combus, int PesoMax, Localizacao coordenada, EstaLigada modo, Compartimento comp)
 {
     set_IDENTIFICADOR(sonda, id);
     set_VELOCIDADE(sonda, velo);
     set_COMBUSTIVEL(sonda, combus);
+    sonda->CompSonda = comp;
     FListaRochaM(&sonda->CompSonda, PesoMax);
     set_LOCALIZACAO(sonda, coordenada);
     set_ESTALIGADA(sonda, modo);
@@ -84,7 +86,13 @@ void MoverSonda(Sonda* sonda, Localizacao novaCoordenada)
     printf("Sonda movida para o local escolhido!\n");
 }
 
-void preencher_dados_sonda(Sonda *sonda){
+float distancia_sonda_rocha(Sonda *sonda, RochaMineral *rocha){
+    float dist_latitude = sonda->coordenadas.Latitude - rocha->localizacao.Latitude;
+    float dist_longitude = sonda->coordenadas.Longitude - rocha->localizacao.Longitude;
+    return sqrt(dist_latitude*dist_latitude + dist_longitude*dist_longitude);
+}
+
+void preencher_dados_sonda(Sonda *sonda, Compartimento comp){
     int id;
     int velo;
     int combus;
@@ -127,5 +135,5 @@ void preencher_dados_sonda(Sonda *sonda){
 
     modo = DESLIGADA;
 
-    Inicializar(sonda, id, velo, combus, pesoMAX, coordenada, modo);
+    Inicializar(sonda, id, velo, combus, pesoMAX, coordenada, modo, comp);
 }
