@@ -19,6 +19,9 @@ int LEhVaziaLS(Lista_Sondas *LS);
 int InsereSondaLS(Lista_Sondas *LS, Sonda *s);
 int RetiraSondaLS(Lista_Sondas *LS, int id, Sonda s);
 void ImprimeLS(Lista_Sondas *LS);
+Sonda* busca_sonda_por_id(Lista_Sondas *LS, int id_sonda);
+//Funcao para mostrar a distancia de cada sonda em relacao a rocha
+void calcular_distancias(Lista_Sondas *LS, RochaMineral *rocha);
 
 
 

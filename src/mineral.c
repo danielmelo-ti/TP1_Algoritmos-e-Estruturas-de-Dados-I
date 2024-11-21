@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "mineral.h"
+#include "headers/mineral.h"
 
 //inicializa o TAD e permite que o usuário insira os dados como quiser.
 

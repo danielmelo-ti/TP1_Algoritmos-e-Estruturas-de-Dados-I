@@ -1,4 +1,4 @@
-#include "Lista_minerais.h"
+#include "headers/Lista_minerais.h"
 #include <stdio.h>
 #include <string.h>
 
