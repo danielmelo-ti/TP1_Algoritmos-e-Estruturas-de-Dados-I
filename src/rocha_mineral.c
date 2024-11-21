@@ -128,7 +128,7 @@ void preencher_rocha_mineral(RochaMineral *nova_rocha, Lista_de_minerais *nova_l
              data_hora_atual.tm_sec);              // Segundos
 
     printf("Insira os dados da rocha: ");
-    fgets(entrada_dados, sizeof(entrada_dados), stdin);  // Lê tudo em uma única linha
+    fgets(entrada_dados, 255, stdin);  // Lê tudo em uma única linha
 
     // Remove a quebra de linha, se houver
     size_t len = strlen(entrada_dados);

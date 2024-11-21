@@ -26,7 +26,7 @@ void inicializar_sistema_controle_CA(){
     char tipo_operacao[10];
     RochaMineral rocha_aux;
     Lista_de_minerais lista_minerais;
-    Compartimento lista_rochas;
+    //Compartimento lista_rochas;
     Lista_Sondas lista_sondas;
 
     inicializa_lista(&lista_minerais);
@@ -37,7 +37,7 @@ void inicializar_sistema_controle_CA(){
     getchar();
 
     for (int i = 0; i<qnt_sondas; i++){
-        preencher_dados_sonda(&sonda_aux, lista_rochas);
+        preencher_dados_sonda(&sonda_aux);
         InsereSondaLS(&lista_sondas, &sonda_aux);
     }
 
