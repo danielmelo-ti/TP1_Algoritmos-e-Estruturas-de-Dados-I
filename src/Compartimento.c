@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Compartimento.h"
+#include "headers/compartimento.h"
 
 void FListaRochaM(Compartimento *LRM, int pesoMAX){
     LRM->pPrimeiro = (CelulaC*)malloc(sizeof(CelulaC));
