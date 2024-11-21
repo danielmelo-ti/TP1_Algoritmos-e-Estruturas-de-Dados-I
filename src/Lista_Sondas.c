@@ -47,56 +47,75 @@ int RetiraSondaLS(Lista_Sondas *LS, int id, Sonda s){
 
 void calcular_distancias(Lista_Sondas *LS, RochaMineral *rocha){
     float lista_distancias[15];
-    CelulaLS *atual = LS->pPrimeiro; // Começa do primeiro elemento da lista
-    int contador = 0;
+    int id_sondas[15];
+    CelulaLS *atual = LS->pPrimeiro;
+    int cnt = 0;
     while (atual != NULL) {
         // Calcula a distância entre a sonda e a rocha
         float distancia = distancia_sonda_rocha(&atual->sonda, rocha);
-        
-        // Exibe a distância da sonda até a rocha
-        printf("Distancia da Sonda %d ate a rocha: %.2f\n", atual->sonda.Identificador, distancia); //TODO:mudar do pirnt para a funcao que vai salvar as 
+        lista_distancias[cnt] = distancia;
+        id_sondas[cnt] = atual->sonda.Identificador;
+        // print para testes
+        printf("Distancia da Sonda %d ate a rocha: %.2f\n", atual->sonda.Identificador, distancia); //TODO: mudar do pirnt para a funcao que vai salvar as 
                                                                                                     // distancias e colocar a rocha na sonda mais proxima
-        
-        // Avança para o próximo nó da lista
+        cnt++;
         atual = atual->pProx;
     }
+    
+    int menor_indice = 0;
+    for (int i = 1; i < cnt; i++) {
+        if (lista_distancias[i] < lista_distancias[menor_indice]) {
+            menor_indice = i;
+        }
+    }
+
+    // Identificar a sonda correspondente
+    int id_menor_sonda = id_sondas[menor_indice];
+    Sonda *sonda_mais_proxima = busca_sonda_por_id(LS, id_menor_sonda);
+
+    if (sonda_mais_proxima != NULL) {
+        printf("Sonda mais proxima e a Sonda %d com distancia %.2f\n", 
+                id_menor_sonda, lista_distancias[menor_indice]);
+    }
+
+    InsereRochaM(sonda_mais_proxima, rocha, PMAX);
 }
 
 Sonda* busca_sonda_por_id(Lista_Sondas *LS, int id_sonda) {
-    CelulaLS *atual_busca_id = LS->pPrimeiro;  // Começa pelo primeiro nó
+    CelulaLS *atual_busca_id = LS->pPrimeiro;
 
     while (atual_busca_id != NULL) {
-        if (atual_busca_id->sonda.Identificador == id_sonda) {  // Verifica o Identificador
-            return &(atual_busca_id->sonda);  // Retorna o endereço da sonda encontrada
+        if (atual_busca_id->sonda.Identificador == id_sonda) {
+            return &(atual_busca_id->sonda);  //retorna o endereço da sonda mais proxima
         }
-        atual_busca_id = atual_busca_id->pProx;  // Avança para o próximo nó
+        atual_busca_id = atual_busca_id->pProx;
     }
 
-    return NULL;  // Retorna NULL se não encontrar a sonda
+    return NULL;
 }
 
 void ImprimeLS(Lista_Sondas *LS) {
-    CelulaLS *pAtual = LS->pPrimeiro->pProx;  // Ponteiro para o primeiro elemento válido da lista
+    CelulaLS *pAtual = LS->pPrimeiro->pProx;
     int cnt = 1;
 
     while (pAtual != NULL) {
         printf("Sonda %d:\n", cnt);
 
-        // Verifica se o compartimento da sonda tem rochas
+        //verifica se o compartimento da sonda tem rochas
         if (LEhVaziaRochaM(&pAtual->sonda.CompSonda)) {
             printf("Compartimento vazio\n");
         } else {
-            // Imprime as rochas no compartimento
-            CelulaC *pRocha = pAtual->sonda.CompSonda.pPrimeiro->pProx;  // Inicia do primeiro elemento válido
+            //imprime as rochas no compartimento
+            CelulaC *pRocha = pAtual->sonda.CompSonda.pPrimeiro->pProx;
             while (pRocha != NULL) {
-                // Imprime a categoria e o peso de cada rocha
+                //imprime a categoria e o peso de cada rocha
                 printf("  Rocha: %d, Peso: %.2f\n", pRocha->rocha.categoria, pRocha->rocha.peso);
                 // FIXME: Quebrou aqui ó
-                pRocha = pRocha->pProx;  // Avança para a próxima rocha
+                pRocha = pRocha->pProx;
             }
         }
 
-        pAtual = pAtual->pProx;  // Avança para a próxima sonda
+        pAtual = pAtual->pProx;
         cnt++;
     }
 }

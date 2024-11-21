@@ -53,7 +53,7 @@ void inicializar_sistema_controle_CA(){
             preencher_rocha_mineral(&rocha_aux, &lista_minerais);
             calcular_distancias(&lista_sondas, &rocha_aux);
             // TODO: funcao para pegar a sonda mais proxima
-            // TODO: carrega_rocha (sonda mais proxima, rocha, 200)
+            // TODO: carrega_rocha (sonda mais proxima, rocha, PMAX)
         }
         else if (strcmp(tipo_operacao, "I") == 0){
             ImprimeLS(&lista_sondas);
