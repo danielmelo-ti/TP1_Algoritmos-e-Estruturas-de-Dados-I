@@ -62,7 +62,8 @@ void ImprimeListaRochaM(Compartimento *LRM){
     pAux = LRM->pPrimeiro->pProx;
     while (pAux != NULL)
     {
-        printf("%s\n", pAux->rocha.categoria);
+        // printf("%d\n", pAux->rocha.categoria);
+        printf("  Rocha: %d, Peso: %.2f\n", pAux->rocha.categoria, pAux->rocha.peso);
         pAux = pAux->pProx;
     }
 }
