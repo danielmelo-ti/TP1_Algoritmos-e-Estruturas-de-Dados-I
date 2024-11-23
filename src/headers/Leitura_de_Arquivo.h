@@ -1,5 +1,5 @@
-#ifndef ARQUIVO_H
-#define ARQUIVO_H
+#ifndef LEITURA_DE_ARQUIVO_H
+#define LEITURA_DE_ARQUIVO_H
 
 #include "Lista_Sondas.h"
 
@@ -7,4 +7,4 @@
 void ler_sondas(FILE *arquivo, Lista_Sondas *lista_sondas);
 void processar_operacoes(FILE *arquivo, Lista_Sondas *lista_sondas, Lista_de_minerais *lista_minerais);
 
-#endif // ARQUIVO_H
+#endif // LEITURA_DE_ARQUIVO_H
