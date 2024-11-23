@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "headers/Lista_Sondas.h"
 
 void FLVaziaLS(Lista_Sondas *LS){
@@ -49,33 +50,37 @@ void calcular_distancias(Lista_Sondas *LS, RochaMineral *rocha){
     float lista_distancias[15];
     int id_sondas[15];
     CelulaLS *atual = LS->pPrimeiro->pProx;
+    CelulaLS *primeira = LS->pPrimeiro->pProx;
     int cnt = 0;
+    int menor_indice = 0;
     while (atual != NULL) {
         // Calcula a distância entre a sonda e a rocha
         float distancia = distancia_sonda_rocha(&atual->sonda, rocha);
         lista_distancias[cnt] = distancia;
         id_sondas[cnt] = atual->sonda.Identificador;
         // print para testes
-        printf("Distancia da Sonda %d ate a rocha: %.2f\n", atual->sonda.Identificador, distancia); //TODO: mudar do pirnt para a funcao que vai salvar as 
-                                                                                                    // distancias e colocar a rocha na sonda mais proxima
+        printf("Distancia da Sonda %d ate a rocha: %.2f\n", atual->sonda.Identificador, distancia);
         cnt++;
         atual = atual->pProx;
     }
-    
-    int menor_indice = 0;
-    for (int i = 1; i < cnt; i++) {
-        if (lista_distancias[i] < lista_distancias[menor_indice]) {
+
+    float menor_distancia = INFINITY;
+
+    for (int i = 0; i < cnt; i++) {
+        Sonda sonda = *busca_sonda_por_id(LS, id_sondas[i]);
+        if (menor_distancia > lista_distancias[i] && rocha->peso <= sonda.CompSonda.pesoMAX - PesoAtual(&sonda.CompSonda)){
             menor_indice = i;
+            menor_distancia = lista_distancias[i];
         }
     }
 
     // Identificar a sonda correspondente
-    int id_menor_sonda = id_sondas[menor_indice];
-    Sonda *sonda_mais_proxima = busca_sonda_por_id(LS, id_menor_sonda);
+    int id_sonda_proxima = id_sondas[menor_indice];
+    Sonda *sonda_mais_proxima = busca_sonda_por_id(LS, id_sonda_proxima);
 
     if (sonda_mais_proxima != NULL) {
         printf("Sonda mais proxima e a Sonda %d com distancia %.2f\n", 
-                id_menor_sonda, lista_distancias[menor_indice]);
+        id_sonda_proxima, lista_distancias[menor_indice]);
     }
 
     InsereRochaM(&sonda_mais_proxima->CompSonda, rocha, PMAX);
@@ -105,14 +110,6 @@ void ImprimeLS(Lista_Sondas *LS) {
         if (LEhVaziaRochaM(&pAtual->sonda.CompSonda)) {
             printf("Compartimento vazio\n");
         } else {
-            //imprime as rochas no compartimento
-            // CelulaC *pRocha = pAtual->sonda.CompSonda.pPrimeiro->pProx;
-            // while (pRocha != NULL) {
-            //     //imprime a categoria e o peso de cada rocha
-            //     printf("  Rocha: %d, Peso: %.2f\n", pRocha->rocha.categoria, pRocha->rocha.peso);
-            //     // FIXME: Quebrou aqui ó
-            //     pRocha = pRocha->pProx;
-            // }
             ImprimeListaRochaM(&pAtual->sonda.CompSonda);
         }
 
@@ -120,54 +117,3 @@ void ImprimeLS(Lista_Sondas *LS) {
         cnt++;
     }
 }
-
-// const char* obterCategoria(Categoria cat) {
-//     const char* nomes[] = {
-//         "Ferrom", "Solaris", "Aquaferro", "Terrolis",
-//         "Terrasol", "Aquaterra", "Calquer",
-//         "Solarisfer", "Terralis", "Aquacalis"
-//     };
-//     return nomes[cat];
-// }
-
-// // Função para imprimir informações das sondas e suas rochas
-// void imprimeLS(Sonda *listaDeSondas, int tamanho) {
-//     for (int i = 0; i < tamanho; i++) {
-//         Sonda sondaAtual = listaDeSondas[i];
-//         printf("%d\n", sondaAtual.Identificador);
-
-//         CelulaC *atual = sondaAtual.CompSonda.pPrimeiro;
-//         while (atual != NULL) {
-//             RochaMineral rochaAtual = atual->rocha;
-//             printf("%s %.2f\n", obterCategoria(rochaAtual.categoria), rochaAtual.peso);
-//             atual = atual->pProx;
-//         }
-
-//         printf("\n"); // Separador entre sondas
-//     }
-// }
-
-// void ImprimeLS(Lista_Sondas *LS){
-//     CelulaLS *pAtual = LS->pPrimeiro->pProx;
-//     int cnt = 1;
-//     while (pAtual != NULL)
-//     {
-//         printf("%d\n", cnt);
-//         printf("%s %d\n", pAtual->sonda.CompSonda.pPrimeiro->rocha.categoria, pAtual->sonda.CompSonda.pPrimeiro->rocha.peso);
-//         pAtual = pAtual->pProx;
-//         cnt++;
-//     }
-// }
-
-/*
-void ImprimeLS(Lista_Sondas *LS){
-    int cnt = 1;
-    while (LS->pUltimo->pProx != NULL)
-    {
-        printf("%d\n", cnt);
-        printf("%d\n", LS->pPrimeiro->pProx);
-        LS->pPrimeiro->pProx->pProx;
-        cnt++;
-    }
-}
-*/

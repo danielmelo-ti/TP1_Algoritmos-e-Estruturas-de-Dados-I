@@ -25,11 +25,9 @@ void inicializar_sistema_controle_CA(){
     int qnt_operacoes;
     char tipo_operacao[10];
     RochaMineral rocha_aux;
-    Lista_de_minerais lista_minerais;
     //Compartimento lista_rochas;
     Lista_Sondas lista_sondas;
 
-    inicializa_lista(&lista_minerais);
     FLVaziaLS(&lista_sondas);
 
     printf("Insira a quantidade de sondas usadas: ");
@@ -50,10 +48,8 @@ void inicializar_sistema_controle_CA(){
         scanf("%s", tipo_operacao);
         getchar();
         if (strcmp(tipo_operacao, "R") == 0){
-            preencher_rocha_mineral(&rocha_aux, &lista_minerais);
+            preencher_rocha_mineral(&rocha_aux);
             calcular_distancias(&lista_sondas, &rocha_aux);
-            // TODO: funcao para pegar a sonda mais proxima
-            // TODO: carrega_rocha (sonda mais proxima, rocha, PMAX)
         }
         else if (strcmp(tipo_operacao, "I") == 0){
             ImprimeLS(&lista_sondas);
@@ -91,7 +87,7 @@ void inicializar_sistema_controle_I(){
         printf("O que deseja fazer: ");
         scanf("%d", &operacao_interativo);
         if (operacao_interativo == 1){
-            preencher_rocha_mineral(&rocha_aux, &lista_minerais);
+            preencher_rocha_mineral(&rocha_aux);
             InsereRochaM(&lista_rochas, &rocha_aux, 200);
         }
         else if (operacao_interativo == 2){

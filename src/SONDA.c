@@ -64,7 +64,7 @@ void Inicializar(Sonda* sonda, int id, int velo, int combus, int PesoMax, Locali
 }
 
 void carrega_rocha(Sonda *sonda, RochaMineral *rocha){
-    InsereRochaM(&sonda->CompSonda, rocha, 200);
+    InsereRochaM(&sonda->CompSonda, rocha, 255);
 }
 
 //Função para LIGAR sonda
@@ -94,7 +94,6 @@ float distancia_sonda_rocha(Sonda *sonda, RochaMineral *rocha){
 
 void preencher_dados_sonda(Sonda *sonda){
     Compartimento comp;
-    FListaRochaM(&comp, PMAX);
     
     int id;
     int velo;
@@ -137,6 +136,8 @@ void preencher_dados_sonda(Sonda *sonda){
     combus = atoi(token);
 
     modo = DESLIGADA;
+
+    FListaRochaM(&comp, pesoMAX);
 
     Inicializar(sonda, id, velo, combus, pesoMAX, coordenada, modo, &comp);
 }

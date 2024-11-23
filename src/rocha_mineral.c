@@ -52,16 +52,16 @@ void classificar_rocha(RochaMineral *nova_rocha, Lista_de_minerais *nova_lista){
         if (strcmp(nova_lista->Lminerais[i].Nome, "Ferrolita") == 0){
             Ferrolita += 1;
         }
-        if (strcmp(nova_lista->Lminerais[i].Nome, "Solarium") == 0) {
+        else if (strcmp(nova_lista->Lminerais[i].Nome, "Solarium") == 0) {
             Solarium += 1;
         }
-        if (strcmp(nova_lista->Lminerais[i].Nome, "Aquavitae") == 0) {
+        else if (strcmp(nova_lista->Lminerais[i].Nome, "Aquavitae") == 0) {
             Aquavitae += 1;
         }
-        if (strcmp(nova_lista->Lminerais[i].Nome, "Terranita") == 0) {
+        else if (strcmp(nova_lista->Lminerais[i].Nome, "Terranita") == 0) {
             Terranita += 1;
         }
-        if (strcmp(nova_lista->Lminerais[i].Nome, "Calaris") == 0) {
+        else if (strcmp(nova_lista->Lminerais[i].Nome, "Calaris") == 0) {
             Calaris += 1;
         }
     }
@@ -98,11 +98,14 @@ void classificar_rocha(RochaMineral *nova_rocha, Lista_de_minerais *nova_lista){
     }
 }
 
-void preencher_rocha_mineral(RochaMineral *nova_rocha, Lista_de_minerais *nova_lista){
+void preencher_rocha_mineral(RochaMineral *nova_rocha){
     int id = 0;
     float peso = 0;
     Localizacao_rocha localizacao;
     char data_coleta[255];  // buffer local para armazenar a data
+    Lista_de_minerais nova_lista;
+
+    inicializa_lista(&nova_lista);
 
     char entrada_dados[255];
 
@@ -155,17 +158,17 @@ void preencher_rocha_mineral(RochaMineral *nova_rocha, Lista_de_minerais *nova_l
 
     // Verifica se os minerais foram lidos corretamente
     if (mineral1 != NULL) {
-        insere_mineral(nova_lista, mineral1);
+        insere_mineral(&nova_lista, mineral1);
     }
     if (mineral2 != NULL) {
-        insere_mineral(nova_lista, mineral2);
+        insere_mineral(&nova_lista, mineral2);
     }
     if (mineral3 != NULL) {
-        insere_mineral(nova_lista, mineral3);
+        insere_mineral(&nova_lista, mineral3);
     }
 
     // Inicializa a rocha mineral com os dados
-    inicializar_rocha_mineral(nova_rocha, id, peso, nova_lista, localizacao, data_coleta);
+    inicializar_rocha_mineral(nova_rocha, id, peso, &nova_lista, localizacao, data_coleta);
 }
 
 void imprimir_rocha_mineral(RochaMineral *nova_rocha){

@@ -58,12 +58,45 @@ int TrocaRochaM(Compartimento *LRM, RochaMineral *RochaM, int PesoMax){
 }
 
 void ImprimeListaRochaM(Compartimento *LRM){
-    CelulaC *pAux;
-    pAux = LRM->pPrimeiro->pProx;
-    while (pAux != NULL)
+    CelulaC *pAuxI;
+    pAuxI = LRM->pPrimeiro->pProx;
+    while (pAuxI != NULL)
     {
-        // printf("%d\n", pAux->rocha.categoria);
-        printf("  Rocha: %d, Peso: %.2f\n", pAux->rocha.categoria, pAux->rocha.peso);
-        pAux = pAux->pProx;
+        switch (pAuxI->rocha.categoria){
+        case Ferrom:
+            printf("Rocha: Ferrom, ");
+            break;
+        case Solaris:
+            printf("Rocha: Solaris, ");
+            break;
+        case Aquaferro:
+            printf("Rocha: Aquaferro, ");
+            break;
+        case Terrolis:
+            printf("Rocha: Terrolis, ");
+            break;
+        case Terrasol:
+            printf("Rocha: Terrasol, ");
+            break;
+        case Aquaterra:
+            printf("Rocha: Aquaterra, ");
+            break;
+        case Calquer:
+            printf("Rocha: Calquer, ");
+            break;
+        case Solarisfer:
+            printf("Rocha: Solarisfer, ");
+            break;
+        case Terralis:
+            printf("Rocha: Terralis, ");
+            break;
+        case Aquacalis:
+            printf("Rocha: Aquacalis, ");
+            break;
+        default: printf("Rocha: Erro, ");
+            break;
+        }
+        printf("Peso: %.2f\n", pAuxI->rocha.peso);
+        pAuxI = pAuxI->pProx;
     }
 }

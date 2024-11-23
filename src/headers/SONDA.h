@@ -7,8 +7,8 @@
 
 typedef struct Localizacao
 {
-    double Latitude;
-    double Longitude;
+    float Latitude;
+    float Longitude;
 }Localizacao;
 
 typedef enum EstaLigada
