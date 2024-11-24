@@ -50,7 +50,6 @@ void calcular_distancias(Lista_Sondas *LS, RochaMineral *rocha){
     float lista_distancias[15];
     int id_sondas[15];
     CelulaLS *atual = LS->pPrimeiro->pProx;
-    CelulaLS *primeira = LS->pPrimeiro->pProx;
     int cnt = 0;
     int menor_indice = 0;
     while (atual != NULL) {
@@ -82,6 +81,8 @@ void calcular_distancias(Lista_Sondas *LS, RochaMineral *rocha){
         printf("Sonda mais proxima e a Sonda %d com distancia %.2f\n", 
         id_sonda_proxima, lista_distancias[menor_indice]);
     }
+
+    MoverSonda(sonda_mais_proxima, rocha);
 
     InsereRochaM(&sonda_mais_proxima->CompSonda, rocha, PMAX);
 }

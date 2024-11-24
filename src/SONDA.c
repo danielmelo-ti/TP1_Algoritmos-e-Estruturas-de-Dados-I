@@ -19,7 +19,7 @@ void set_COMBUSTIVEL(Sonda* sonda, int combus){
     sonda->combustivel = combus;
 }
 
-void set_LOCALIZACAO(Sonda* sonda, Localizacao coordenada)
+void set_LOCALIZACAO(Sonda* sonda, Localizacao_sonda coordenada)
 {
     sonda->coordenadas = coordenada;
 }
@@ -41,7 +41,7 @@ int get_VELOCIDADE(Sonda* sonda){
 int get_COMBUSTIVEL(Sonda* sonda){
     return (sonda->combustivel);
 }
-Localizacao get_LOCALIZACAO(Sonda* sonda)
+Localizacao_sonda get_LOCALIZACAO(Sonda* sonda)
 {
     return (sonda->coordenadas);
 }
@@ -52,7 +52,7 @@ EstaLigada get_ESTALIGADA(Sonda* sonda)
 
 
 //Função para iniciar a sonda (SEM rocha mineral, ou seja, COMPARTIMENTO VAZIO, e inicialmente DESLIGADA)
-void Inicializar(Sonda* sonda, int id, int velo, int combus, int PesoMax, Localizacao coordenada, EstaLigada modo, Compartimento *comp)
+void Inicializar(Sonda* sonda, int id, int velo, int combus, int PesoMax, Localizacao_sonda coordenada, EstaLigada modo, Compartimento *comp)
 {
     set_IDENTIFICADOR(sonda, id);
     set_VELOCIDADE(sonda, velo);
@@ -80,9 +80,10 @@ void DesligarSonda(Sonda* sonda) {
     }
 }
 //Função para MOVER sonda
-void MoverSonda(Sonda* sonda, Localizacao novaCoordenada)
+void MoverSonda(Sonda* sonda, RochaMineral *rocha)
 {
-    sonda->coordenadas = novaCoordenada;
+    sonda->coordenadas.Latitude = rocha->localizacao.Latitude;
+    sonda->coordenadas.Longitude = rocha->localizacao.Longitude;
     printf("Sonda movida para o local escolhido!\n");
 }
 
@@ -99,7 +100,7 @@ void preencher_dados_sonda(Sonda *sonda){
     int velo;
     int combus;
     int pesoMAX;
-    Localizacao coordenada;
+    Localizacao_sonda coordenada;
     EstaLigada modo;
 
     char buffer[100];

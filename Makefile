@@ -1,2 +1,2 @@
 compile: src/main.c src/compartimento.c src/Lista_minerais.c src/Lista_Sondas.c src/mineral.c src/rocha_mineral.c src/sistema_controle.c src/SONDA.c
-	gcc -o bin/TP1 src/main.c src/compartimento.c src/Lista_minerais.c src/Lista_Sondas.c src/mineral.c src/rocha_mineral.c src/sistema_controle.c src/SONDA.c -g -lm
+	gcc -o bin/TP1 src/main.c src/compartimento.c src/Lista_minerais.c src/Lista_Sondas.c src/mineral.c src/rocha_mineral.c src/sistema_controle.c src/SONDA.c -lm

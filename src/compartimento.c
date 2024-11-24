@@ -93,7 +93,7 @@ void ImprimeListaRochaM(Compartimento *LRM){
         case Aquacalis:
             printf("Rocha: Aquacalis, ");
             break;
-        default: printf("Rocha: Erro, ");
+        default: printf("Rocha: Erro");
             break;
         }
         printf("Peso: %.2f\n", pAuxI->rocha.peso);

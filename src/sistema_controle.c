@@ -50,6 +50,7 @@ void inicializar_sistema_controle_CA(){
         if (strcmp(tipo_operacao, "R") == 0){
             preencher_rocha_mineral(&rocha_aux);
             calcular_distancias(&lista_sondas, &rocha_aux);
+            
         }
         else if (strcmp(tipo_operacao, "I") == 0){
             ImprimeLS(&lista_sondas);

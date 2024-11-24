@@ -6,7 +6,7 @@
 #include "headers/rocha_mineral.h"
 
 // Inicializar nova rocha
-void inicializar_rocha_mineral(RochaMineral *nova_rocha, int novo_id, float novo_peso, Lista_de_minerais *nova_lista, Localizacao_rocha nova_localizacao, char *nova_data_coleta){
+void inicializar_rocha_mineral(RochaMineral *nova_rocha, int novo_id, float novo_peso, Lista_de_minerais *nova_lista, Localizacao nova_localizacao, char *nova_data_coleta){
     set_id(nova_rocha, novo_id);
     set_peso(nova_rocha, novo_peso);
     set_localizacao(nova_rocha, nova_localizacao);
@@ -21,7 +21,7 @@ int get_id(RochaMineral *nova_rocha){
 float get_peso(RochaMineral *nova_rocha){
     return(nova_rocha->peso);
 }
-Localizacao_rocha get_localizacao(RochaMineral *nova_rocha){
+Localizacao get_localizacao(RochaMineral *nova_rocha){
     return(nova_rocha->localizacao);
 }
 char *get_data_coleta(RochaMineral *nova_rocha){
@@ -36,7 +36,7 @@ void set_id(RochaMineral *nova_rocha, int novo_id){
 void set_peso(RochaMineral *nova_rocha, float novo_peso){
     nova_rocha->peso = novo_peso;
 }
-void set_localizacao(RochaMineral *nova_rocha, Localizacao_rocha nova_localizacao){
+void set_localizacao(RochaMineral *nova_rocha, Localizacao nova_localizacao){
     nova_rocha->localizacao = nova_localizacao;
 }
 void set_data_coleta(RochaMineral *nova_rocha, char *nova_data_coleta){
@@ -67,33 +67,33 @@ void classificar_rocha(RochaMineral *nova_rocha, Lista_de_minerais *nova_lista){
     }
 
     if (Ferrolita == 1 && Solarium == 0 && Aquavitae == 0 && Terranita == 0 && Calaris == 0) {
-        nova_rocha->categoria = Ferrom;
+    nova_rocha->categoria = Ferrom;
     }
-    else if (Solarium == 1 && Ferrolita == 0 && Aquavitae == 0 && Terranita == 0 && Calaris == 0){
+    else if (Ferrolita == 0 && Solarium == 1 && Aquavitae == 0 && Terranita == 0 && Calaris == 0) {
         nova_rocha->categoria = Solaris;
     }
-    else if (Ferrolita == 1 && Aquavitae == 1 && Solarium == 0 && Terranita == 0 && Calaris == 0){
+    else if (Ferrolita == 1 && Solarium == 0 && Aquavitae == 1 && Terranita == 0 && Calaris == 0) {
         nova_rocha->categoria = Aquaferro;
     }
-    else if (Terranita == 1 && Calaris == 1 && Ferrolita == 0 && Aquavitae == 0 && Solarium == 0){
+    else if (Ferrolita == 0 && Solarium == 0 && Aquavitae == 0 && Terranita == 1 && Calaris == 1) {
         nova_rocha->categoria = Terrolis;
     }
-    else if (Terranita == 1 && Solarium == 1 && Ferrolita == 0 && Aquavitae== 0 && Calaris == 0){
+    else if (Ferrolita == 0 && Solarium == 1 && Aquavitae == 0 && Terranita == 1 && Calaris == 0) {
         nova_rocha->categoria = Terrasol;
     }
-    else if (Aquavitae == 1 && Terranita == 1 && Ferrolita == 0 && Solarium == 0 && Calaris == 0){
+    else if (Ferrolita == 0 && Solarium == 0 && Aquavitae == 1 && Terranita == 1 && Calaris == 0) {
         nova_rocha->categoria = Aquaterra;
     }
-    else if (Calaris == 1 && Aquavitae == 1 && Ferrolita == 0 && Solarium == 0 && Terranita == 0){
+    else if (Ferrolita == 0 && Solarium == 0 && Aquavitae == 1 && Terranita == 0 && Calaris == 1) {
         nova_rocha->categoria = Calquer;
     }
-    else if (Solarium == 1 && Ferrolita == 1 && Aquavitae == 0 && Terranita == 0 && Calaris == 0){
+    else if (Ferrolita == 1 && Solarium == 1 && Aquavitae == 0 && Terranita == 0 && Calaris == 0) {
         nova_rocha->categoria = Solarisfer;
     }
-    else if (Terranita == 1 && Ferrolita == 1 && Aquavitae == 0 && Solarium == 0 && Calaris == 0){
+    else if (Ferrolita == 1 && Solarium == 0 && Aquavitae == 0 && Terranita == 1 && Calaris == 0) {
         nova_rocha->categoria = Terralis;
     }
-    else if (Aquavitae == 1 && Calaris == 1 && Ferrolita == 1){
+    else if (Ferrolita == 1 && Solarium == 0 && Aquavitae == 1 && Terranita == 0 && Calaris == 1) {
         nova_rocha->categoria = Aquacalis;
     }
 }
@@ -101,7 +101,7 @@ void classificar_rocha(RochaMineral *nova_rocha, Lista_de_minerais *nova_lista){
 void preencher_rocha_mineral(RochaMineral *nova_rocha){
     int id = 0;
     float peso = 0;
-    Localizacao_rocha localizacao;
+    Localizacao localizacao;
     char data_coleta[255];  // buffer local para armazenar a data
     Lista_de_minerais nova_lista;
 
