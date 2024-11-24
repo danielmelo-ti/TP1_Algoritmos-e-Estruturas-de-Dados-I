@@ -85,6 +85,7 @@ void MoverSonda(Sonda* sonda, RochaMineral *rocha)
     sonda->coordenadas.Latitude = rocha->localizacao.Latitude;
     sonda->coordenadas.Longitude = rocha->localizacao.Longitude;
     printf("Sonda movida para o local escolhido!\n");
+    printf("============================================================\n");
 }
 
 float distancia_sonda_rocha(Sonda *sonda, RochaMineral *rocha){

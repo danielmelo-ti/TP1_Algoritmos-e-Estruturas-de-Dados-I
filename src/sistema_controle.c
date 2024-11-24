@@ -50,13 +50,15 @@ void inicializar_sistema_controle_CA(){
         if (strcmp(tipo_operacao, "R") == 0){
             preencher_rocha_mineral(&rocha_aux);
             calcular_distancias(&lista_sondas, &rocha_aux);
-            
+
         }
         else if (strcmp(tipo_operacao, "I") == 0){
             ImprimeLS(&lista_sondas);
         }
         else if (strcmp(tipo_operacao, "E") == 0){
-            // TODO: Redistribui
+            for (int i = 0; i < qnt_sondas; i++){
+                //TODO: Redistribui
+            }
         }
     }
 }
@@ -67,17 +69,24 @@ void inicializar_sistema_controle_I(){
     int qnt_operacoes;
     char tipo_operacao[10];
     RochaMineral rocha_aux;
-    Lista_de_minerais lista_minerais;
-    Compartimento lista_rochas;
     Lista_Sondas lista_sondas;
+
+    FLVaziaLS(&lista_sondas);
 
     int operacao_interativo;
     
     int operacao_acabou = 1;
 
-    inicializa_lista(&lista_minerais);
-    FListaRochaM(&lista_rochas, 200);
-    FLVaziaLS(&lista_sondas);
+    printf("Bem vindo, para comecar insira a quantidade de sondas: ");
+    scanf("%d", &qnt_sondas);
+    getchar();
+
+    for (int i = 0; i<qnt_sondas; i++){
+        preencher_dados_sonda(&sonda_aux);
+        InsereSondaLS(&lista_sondas, &sonda_aux);
+    }
+
+    printf("Selecione o que deseja fazer agora: \n");
 
     while (operacao_acabou != 2){
         printf("====================\n");
@@ -87,9 +96,10 @@ void inicializar_sistema_controle_I(){
         printf("====================\n");
         printf("O que deseja fazer: ");
         scanf("%d", &operacao_interativo);
+        getchar();
         if (operacao_interativo == 1){
             preencher_rocha_mineral(&rocha_aux);
-            InsereRochaM(&lista_rochas, &rocha_aux, 200);
+            calcular_distancias(&lista_sondas, &rocha_aux);
         }
         else if (operacao_interativo == 2){
             ImprimeLS(&lista_sondas);
@@ -100,5 +110,8 @@ void inicializar_sistema_controle_I(){
         printf("Procedimento realizado!\n");
         printf("Deseja fazer nova operacao? (1 - SIM / 2 - NAO)\n");
         scanf("%d", &operacao_acabou);
+        if (operacao_acabou == 2){
+            printf("Procedimentos finalizados!");
+        }
     }
 }

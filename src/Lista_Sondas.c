@@ -58,7 +58,7 @@ void calcular_distancias(Lista_Sondas *LS, RochaMineral *rocha){
         lista_distancias[cnt] = distancia;
         id_sondas[cnt] = atual->sonda.Identificador;
         // print para testes
-        printf("Distancia da Sonda %d ate a rocha: %.2f\n", atual->sonda.Identificador, distancia);
+        printf("  Distancia da Sonda %d ate a rocha: %.2f\n", atual->sonda.Identificador, distancia);
         cnt++;
         atual = atual->pProx;
     }
@@ -78,8 +78,9 @@ void calcular_distancias(Lista_Sondas *LS, RochaMineral *rocha){
     Sonda *sonda_mais_proxima = busca_sonda_por_id(LS, id_sonda_proxima);
 
     if (sonda_mais_proxima != NULL) {
-        printf("Sonda mais proxima e a Sonda %d com distancia %.2f\n", 
-        id_sonda_proxima, lista_distancias[menor_indice]);
+        printf("============================================================\n");
+        printf("Sonda mais proxima e a Sonda %d com distancia %.2f\n", id_sonda_proxima, lista_distancias[menor_indice]);
+        printf("============================================================\n");
     }
 
     MoverSonda(sonda_mais_proxima, rocha);
