@@ -1,7 +1,6 @@
 #ifndef SONDA_H_INCLUDED
 #define SONDA_H_INCLUDED
 
-#include <stdio.h>
 #include <stdlib.h>
 #include "compartimento.h"
 
@@ -55,7 +54,7 @@ void DesligarSonda(Sonda* sonda);
 //Função para MOVER sonda
 void MoverSonda(Sonda* sonda, RochaMineral *rocha);
 //Funcao para preencher dados da sonda
-void preencher_dados_sonda(Sonda *sonda);
+void preencher_dados_sonda(FILE *arquivo, Sonda *sonda);
 //Funcao para identificar a sonda mais proxima da rocha em questao
 float distancia_sonda_rocha(Sonda *sonda, RochaMineral *rocha);
 #endif // SONDA_H_INCLUDED

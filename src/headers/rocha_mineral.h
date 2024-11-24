@@ -3,6 +3,8 @@
 
 #include "Lista_minerais.h"
 
+#include <stdlib.h>
+
 typedef enum Categoria {
     Ferrom,
     Solaris,
@@ -47,7 +49,7 @@ void set_localizacao(RochaMineral *nova_rocha, Localizacao nova_localizacao);
 void set_data_coleta(RochaMineral *nova_rocha, char *nova_data_coleta);
 
 //preenche_dados_rochas
-void preencher_rocha_mineral(RochaMineral *nova_rocha);
+void preencher_rocha_mineral(FILE *arquivo, RochaMineral *nova_rocha);
 // categoriza a rocha
 void classificar_rocha(RochaMineral *nova_rocha, Lista_de_minerais *nova_lista);
 // imprime rocha mineral

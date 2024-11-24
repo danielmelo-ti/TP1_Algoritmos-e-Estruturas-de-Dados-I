@@ -94,7 +94,7 @@ float distancia_sonda_rocha(Sonda *sonda, RochaMineral *rocha){
     return sqrt(dist_latitude*dist_latitude + dist_longitude*dist_longitude);
 }
 
-void preencher_dados_sonda(Sonda *sonda){
+void preencher_dados_sonda(FILE *arquivo, Sonda *sonda){
     Compartimento comp;
     
     int id;
@@ -108,8 +108,8 @@ void preencher_dados_sonda(Sonda *sonda){
 
     id = rand() % 100;
 
-    printf("Insira os dados da sonda: ");
-    fgets(buffer, sizeof(buffer), stdin);
+    if (arquivo == stdin) printf("Insira os dados da sonda: ");
+    fgets(buffer, 100, arquivo);
 
     // Remove a quebra de linha, se houver
     size_t len = strlen(buffer);
