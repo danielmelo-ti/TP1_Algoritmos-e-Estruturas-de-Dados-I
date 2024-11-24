@@ -60,7 +60,7 @@ void Inicializar(Sonda* sonda, int id, int velo, int combus, int PesoMax, Locali
     sonda->CompSonda = *comp;
     FListaRochaM(&sonda->CompSonda, PesoMax);
     set_LOCALIZACAO(sonda, coordenada);
-    set_ESTALIGADA(sonda, modo);
+    set_ESTALIGADA(sonda, 0);
 }
 
 void carrega_rocha(Sonda *sonda, RochaMineral *rocha){

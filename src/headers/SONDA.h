@@ -34,6 +34,8 @@ void set_LOCALIZACAO(Sonda* sonda, Localizacao_sonda coordenada);
 void set_VELOCIDADE(Sonda* sonda, int velo);
 void set_COMBUSTIVEL(Sonda* sonda, int combus);
 void set_ESTALIGADA(Sonda* sonda, EstaLigada modo);
+void set_VELOCIDADE(Sonda* sonda, int velo);
+void set_COMBUSTIVEL(Sonda* sonda, int combus);
 
 //Funções GET
 int get_IDENTIFICADOR(Sonda* S);
