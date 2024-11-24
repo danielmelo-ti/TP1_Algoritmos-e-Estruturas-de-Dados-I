@@ -6,7 +6,7 @@
 #define PMAX 300000
 
 typedef struct {
-    Mineral Lminerais[3];
+    Mineral Lminerais[255];
     int primeiro, ultimo;
 } Lista_de_minerais;
 

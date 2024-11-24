@@ -19,7 +19,7 @@ void set_COMBUSTIVEL(Sonda* sonda, int combus){
     sonda->combustivel = combus;
 }
 
-void set_LOCALIZACAO(Sonda* sonda, Localizacao coordenada)
+void set_LOCALIZACAO(Sonda* sonda, Localizacao_sonda coordenada)
 {
     sonda->coordenadas = coordenada;
 }
@@ -41,7 +41,7 @@ int get_VELOCIDADE(Sonda* sonda){
 int get_COMBUSTIVEL(Sonda* sonda){
     return (sonda->combustivel);
 }
-Localizacao get_LOCALIZACAO(Sonda* sonda)
+Localizacao_sonda get_LOCALIZACAO(Sonda* sonda)
 {
     return (sonda->coordenadas);
 }
@@ -52,7 +52,7 @@ EstaLigada get_ESTALIGADA(Sonda* sonda)
 
 
 //Função para iniciar a sonda (SEM rocha mineral, ou seja, COMPARTIMENTO VAZIO, e inicialmente DESLIGADA)
-void Inicializar(Sonda* sonda, int id, int velo, int combus, int PesoMax, Localizacao coordenada, EstaLigada modo, Compartimento *comp)
+void Inicializar(Sonda* sonda, int id, int velo, int combus, int PesoMax, Localizacao_sonda coordenada, EstaLigada modo, Compartimento *comp)
 {
     set_IDENTIFICADOR(sonda, id);
     set_VELOCIDADE(sonda, velo);
@@ -64,7 +64,7 @@ void Inicializar(Sonda* sonda, int id, int velo, int combus, int PesoMax, Locali
 }
 
 void carrega_rocha(Sonda *sonda, RochaMineral *rocha){
-    InsereRochaM(&sonda->CompSonda, rocha, 200);
+    InsereRochaM(&sonda->CompSonda, rocha, 255);
 }
 
 //Função para LIGAR sonda
@@ -80,10 +80,12 @@ void DesligarSonda(Sonda* sonda) {
     }
 }
 //Função para MOVER sonda
-void MoverSonda(Sonda* sonda, Localizacao novaCoordenada)
+void MoverSonda(Sonda* sonda, RochaMineral *rocha)
 {
-    sonda->coordenadas = novaCoordenada;
+    sonda->coordenadas.Latitude = rocha->localizacao.Latitude;
+    sonda->coordenadas.Longitude = rocha->localizacao.Longitude;
     printf("Sonda movida para o local escolhido!\n");
+    printf("============================================================\n");
 }
 
 float distancia_sonda_rocha(Sonda *sonda, RochaMineral *rocha){
@@ -92,23 +94,22 @@ float distancia_sonda_rocha(Sonda *sonda, RochaMineral *rocha){
     return sqrt(dist_latitude*dist_latitude + dist_longitude*dist_longitude);
 }
 
-void preencher_dados_sonda(Sonda *sonda){
+void preencher_dados_sonda(FILE *arquivo, Sonda *sonda){
     Compartimento comp;
-    FListaRochaM(&comp, PMAX);
     
     int id;
     int velo;
     int combus;
     int pesoMAX;
-    Localizacao coordenada;
+    Localizacao_sonda coordenada;
     EstaLigada modo;
 
     char buffer[100];
 
     id = rand() % 100;
 
-    printf("Insira os dados da sonda: ");
-    fgets(buffer, sizeof(buffer), stdin);
+    if (arquivo == stdin) printf("Insira os dados da sonda: ");
+    fgets(buffer, 100, arquivo);
 
     // Remove a quebra de linha, se houver
     size_t len = strlen(buffer);
@@ -137,6 +138,8 @@ void preencher_dados_sonda(Sonda *sonda){
     combus = atoi(token);
 
     modo = DESLIGADA;
+
+    FListaRochaM(&comp, pesoMAX);
 
     Inicializar(sonda, id, velo, combus, pesoMAX, coordenada, modo, &comp);
 }
