@@ -77,9 +77,7 @@ void execucao(FILE *arquivo, Lista_Sondas *sondas) {
             ImprimeLS(sondas);
         }
         else if (strcmp(tipo_operacao, "E") == 0){
-            for (int i = 0; i < qnt_sondas; i++) {
-
-            }
+            redistribuir_rochas(sondas);
         }
     }
 }

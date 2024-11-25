@@ -1,0 +1,2 @@
+compile: src/main.c src/compartimento.c src/Lista_minerais.c src/Lista_Sondas.c src/mineral.c src/rocha_mineral.c src/SONDA.c
+	gcc -o bin/TP1 src/main.c src/compartimento.c src/Lista_minerais.c src/Lista_Sondas.c src/mineral.c src/rocha_mineral.c src/SONDA.c -lm

@@ -101,6 +101,66 @@ Sonda* busca_sonda_por_id(Lista_Sondas *LS, int id_sonda) {
     return NULL;
 }
 
+void redistribuir_rochas(Lista_Sondas *sondas) {
+    // Etapa 1: Mover todas as sondas para o ponto (0, 0)
+    CelulaLS *sonda_atual = sondas->pPrimeiro->pProx;
+    while (sonda_atual != NULL) {
+        sonda_atual->sonda.coordenadas.Latitude = 0;
+        sonda_atual->sonda.coordenadas.Longitude = 0;
+        sonda_atual = sonda_atual->pProx;
+    }
+
+    // Etapa 2: Calcular o peso total e redistribuir
+    sonda_atual = sondas->pPrimeiro->pProx;
+    float peso_total = 0;
+    int num_sondas = 0;
+
+    // Calcular peso total e número de sondas
+    while (sonda_atual != NULL) {
+        peso_total += sonda_atual->sonda.CompSonda.pesoMAX;
+        num_sondas++;
+        sonda_atual = sonda_atual->pProx;
+    }
+
+    float peso_medio = peso_total / num_sondas;
+
+    // Criar uma lista temporária de todas as rochas
+    Compartimento todas_rochas;
+    FListaRochaM(&todas_rochas, 550);
+
+    sonda_atual = sondas->pPrimeiro->pProx;
+    while (sonda_atual != NULL) {
+        CelulaC *comp_atual2 = sonda_atual->sonda.CompSonda.pPrimeiro->pProx;
+        while (comp_atual2 != NULL) {
+            InsereRochaM(&todas_rochas, &comp_atual2->rocha, PMAX);
+            comp_atual2 = comp_atual2->pProx;
+        }
+        sonda_atual->sonda.CompSonda.pesoMAX = 0; // Zera o peso das sondas
+        FListaRochaM(&sonda_atual->sonda.CompSonda, 550); // Limpa o compartimento
+        sonda_atual = sonda_atual->pProx;
+    }
+
+    // Redistribuir as rochas equilibrando os pesos
+    sonda_atual = sondas->pPrimeiro->pProx;
+    CelulaC *comp_atual2 = todas_rochas.pPrimeiro->pProx;
+
+    while (comp_atual2 != NULL) {
+        if (sonda_atual->sonda.CompSonda.pesoMAX + comp_atual2->rocha.peso <= peso_medio) {
+            InsereRochaM(&sonda_atual->sonda.CompSonda, &comp_atual2->rocha, PMAX);
+        } else {
+            // Avança para a próxima sonda se o peso ultrapassar o peso médio
+            sonda_atual = sonda_atual->pProx;
+            if (sonda_atual == NULL) {
+                sonda_atual = sondas->pPrimeiro->pProx; // Reinicia a distribuição
+            }
+        }
+        comp_atual2 = comp_atual2->pProx;
+    }
+    printf("\n");
+    printf("Redistribuicao concluida.\n");
+    printf("\n");
+}
+
 void ImprimeLS(Lista_Sondas *LS) {
     CelulaLS *pAtual = LS->pPrimeiro->pProx;
     int cnt = 1;

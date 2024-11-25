@@ -53,6 +53,8 @@ void LigarSonda(Sonda* sonda);
 void DesligarSonda(Sonda* sonda);
 //Função para MOVER sonda
 void MoverSonda(Sonda* sonda, RochaMineral *rocha);
+//Função para MOVER sonda por coordenadas
+void MoverSondaPorCoordenadas(Sonda *sonda, float latitude, float longitude);
 //Funcao para preencher dados da sonda
 void preencher_dados_sonda(FILE *arquivo, Sonda *sonda);
 //Funcao para identificar a sonda mais proxima da rocha em questao

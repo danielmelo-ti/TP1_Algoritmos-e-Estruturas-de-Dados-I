@@ -1,0 +1,153 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+#include "headers/SONDA.h"
+
+//Funções SET
+void set_IDENTIFICADOR(Sonda* sonda, int id)
+{
+    sonda->Identificador = id;
+}
+
+void set_VELOCIDADE(Sonda* sonda, int velo){
+    sonda->velocidade = velo;
+}
+
+void set_COMBUSTIVEL(Sonda* sonda, int combus){
+    sonda->combustivel = combus;
+}
+
+void set_LOCALIZACAO(Sonda* sonda, Localizacao_sonda coordenada)
+{
+    sonda->coordenadas = coordenada;
+}
+
+void set_ESTALIGADA(Sonda* sonda, EstaLigada modo)
+{
+    sonda->modo = modo;
+}
+
+//Funções GET
+int get_IDENTIFICADOR(Sonda* sonda)
+{
+    return (sonda->Identificador);
+}
+
+int get_VELOCIDADE(Sonda* sonda){
+    return (sonda->velocidade);
+}
+int get_COMBUSTIVEL(Sonda* sonda){
+    return (sonda->combustivel);
+}
+Localizacao_sonda get_LOCALIZACAO(Sonda* sonda)
+{
+    return (sonda->coordenadas);
+}
+EstaLigada get_ESTALIGADA(Sonda* sonda)
+{
+    return (sonda->modo);
+}
+
+
+//Função para iniciar a sonda (SEM rocha mineral, ou seja, COMPARTIMENTO VAZIO, e inicialmente DESLIGADA)
+void Inicializar(Sonda* sonda, int id, int velo, int combus, int PesoMax, Localizacao_sonda coordenada, EstaLigada modo, Compartimento *comp)
+{
+    set_IDENTIFICADOR(sonda, id);
+    set_VELOCIDADE(sonda, velo);
+    set_COMBUSTIVEL(sonda, combus);
+    sonda->CompSonda = *comp;
+    FListaRochaM(&sonda->CompSonda, PesoMax);
+    set_LOCALIZACAO(sonda, coordenada);
+    set_ESTALIGADA(sonda, modo);
+}
+
+void carrega_rocha(Sonda *sonda, RochaMineral *rocha){
+    InsereRochaM(&sonda->CompSonda, rocha, 255);
+}
+
+//Função para LIGAR sonda
+void LigarSonda(Sonda* sonda) {
+    if (sonda->modo == DESLIGADA) {
+        sonda->modo = LIGADA; // Atualiza o valor apontado para LIGADA
+    }
+}
+//Função para DESLIGAR sonda
+void DesligarSonda(Sonda* sonda) {
+    if (sonda->modo == LIGADA) {
+        sonda->modo = DESLIGADA; // Atualiza o valor apontado para DESLIGADA
+    }
+}
+//Função para MOVER sonda
+void MoverSonda(Sonda* sonda, RochaMineral *rocha)
+{
+    sonda->coordenadas.Latitude = rocha->localizacao.Latitude;
+    sonda->coordenadas.Longitude = rocha->localizacao.Longitude;
+    printf("Sonda movida para o local escolhido!\n");
+    printf("============================================================\n");
+}
+
+void MoverSondaPorCoordenadas(Sonda *sonda, float latitude, float longitude)
+{
+    sonda->coordenadas.Latitude = latitude;
+    sonda->coordenadas.Longitude = longitude;
+    printf("Sonda movida para o local escolhido!\n");
+    printf("============================================================\n");
+}
+
+float distancia_sonda_rocha(Sonda *sonda, RochaMineral *rocha){
+    float dist_latitude = sonda->coordenadas.Latitude - rocha->localizacao.Latitude;
+    float dist_longitude = sonda->coordenadas.Longitude - rocha->localizacao.Longitude;
+    return sqrt(dist_latitude*dist_latitude + dist_longitude*dist_longitude);
+}
+
+void preencher_dados_sonda(FILE *arquivo, Sonda *sonda){
+    Compartimento comp;
+    
+    int id;
+    int velo;
+    int combus;
+    int pesoMAX;
+    Localizacao_sonda coordenada;
+    EstaLigada modo;
+
+    char buffer[100];
+
+    id = rand() % 100;
+
+    if (arquivo == stdin) printf("Insira os dados da sonda: ");
+    fgets(buffer, 100, arquivo);
+
+    // Remove a quebra de linha, se houver
+    size_t len = strlen(buffer);
+    if (len > 0 && buffer[len - 1] == '\n') {
+        buffer[len - 1] = '\0';
+    }
+
+    // Usando strtok para dividir os dados na linha
+    char *token = strtok(buffer, " ");
+    
+    // Lê a localização (latitude e longitude)
+    coordenada.Latitude = atof(token);
+    token = strtok(NULL, " ");
+    coordenada.Longitude = atof(token);
+    
+    // Lê o peso maximo (capacidade maxima)
+    token = strtok(NULL, " ");
+    pesoMAX = atoi(token);
+    
+    // Lê a velo
+    token = strtok(NULL, " ");
+    velo = atoi(token);
+
+    // Lê o nivel de combustivel
+    token = strtok(NULL, " ");
+    combus = atoi(token);
+
+    modo = DESLIGADA;
+
+    FListaRochaM(&comp, pesoMAX);
+
+    Inicializar(sonda, id, velo, combus, pesoMAX, coordenada, modo, &comp);
+}

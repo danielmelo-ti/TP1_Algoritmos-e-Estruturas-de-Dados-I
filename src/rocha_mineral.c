@@ -130,7 +130,7 @@ void preencher_rocha_mineral(FILE *arquivo, RochaMineral *nova_rocha){
              data_hora_atual.tm_min,               // Minutos
              data_hora_atual.tm_sec);              // Segundos
 
-    printf("Insira os dados da rocha: ");
+    printf("Insira os dados da rocha: \n");
     fgets(entrada_dados, 255, arquivo);  // Lê tudo em uma única linha
 
     // Remove a quebra de linha, se houver
