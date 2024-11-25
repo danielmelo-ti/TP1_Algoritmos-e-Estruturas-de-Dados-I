@@ -101,60 +101,65 @@ Sonda* busca_sonda_por_id(Lista_Sondas *LS, int id_sonda) {
     return NULL;
 }
 
+//FIXME: Ta dando tudo errado mds
 void redistribuir_rochas(Lista_Sondas *sondas) {
-    // Etapa 1: Mover todas as sondas para o ponto (0, 0)
+
+    //move todas as sondas
     CelulaLS *sonda_atual = sondas->pPrimeiro->pProx;
     while (sonda_atual != NULL) {
-        sonda_atual->sonda.coordenadas.Latitude = 0;
-        sonda_atual->sonda.coordenadas.Longitude = 0;
+        MoverSondaPorCoordenadas(&sonda_atual->sonda, 0, 0);
         sonda_atual = sonda_atual->pProx;
     }
 
-    // Etapa 2: Calcular o peso total e redistribuir
+    //guarda o peso total e calcula a qnt de sondas
     sonda_atual = sondas->pPrimeiro->pProx;
     float peso_total = 0;
-    int num_sondas = 0;
+    int qtd_sondas = 0;
 
-    // Calcular peso total e número de sondas
     while (sonda_atual != NULL) {
         peso_total += sonda_atual->sonda.CompSonda.pesoMAX;
-        num_sondas++;
+        qtd_sondas++;
         sonda_atual = sonda_atual->pProx;
     }
 
-    float peso_medio = peso_total / num_sondas;
+    float peso_medio = peso_total/qtd_sondas; //media dos pesos das sondas
 
-    // Criar uma lista temporária de todas as rochas
+    //cria nova lista de rochas vazia
     Compartimento todas_rochas;
     FListaRochaM(&todas_rochas, 550);
 
+    //percorre o compartimento de cada sonda da lista de sondas passada
+    //+
+    //insere cada rocha do compartimento dentro da nova lista de rochas
     sonda_atual = sondas->pPrimeiro->pProx;
     while (sonda_atual != NULL) {
-        CelulaC *comp_atual2 = sonda_atual->sonda.CompSonda.pPrimeiro->pProx;
-        while (comp_atual2 != NULL) {
-            InsereRochaM(&todas_rochas, &comp_atual2->rocha, PMAX);
-            comp_atual2 = comp_atual2->pProx;
+        CelulaC *comp_atual1 = sonda_atual->sonda.CompSonda.pPrimeiro->pProx; //cada compartimento de cada sonda
+        while (comp_atual1 != NULL) {
+            InsereRochaM(&todas_rochas, &comp_atual1->rocha, 80);
+            comp_atual1 = comp_atual1->pProx;
         }
-        sonda_atual->sonda.CompSonda.pesoMAX = 0; // Zera o peso das sondas
-        FListaRochaM(&sonda_atual->sonda.CompSonda, 550); // Limpa o compartimento
+        sonda_atual->sonda.CompSonda.pesoMAX = 0; //define pesoMAX como 0 para todos os compartimentos de cada sonda
+        FListaRochaM(&sonda_atual->sonda.CompSonda, 550); //limpar compartimento
         sonda_atual = sonda_atual->pProx;
     }
 
-    // Redistribuir as rochas equilibrando os pesos
     sonda_atual = sondas->pPrimeiro->pProx;
-    CelulaC *comp_atual2 = todas_rochas.pPrimeiro->pProx;
+    CelulaC *comp_atual2 = todas_rochas.pPrimeiro->pProx; //ponteiro para nova lista de rochas
 
+
+    //redistribuir
     while (comp_atual2 != NULL) {
+        //verifica se a sonda atual pode receber a rocha
         if (sonda_atual->sonda.CompSonda.pesoMAX + comp_atual2->rocha.peso <= peso_medio) {
-            InsereRochaM(&sonda_atual->sonda.CompSonda, &comp_atual2->rocha, PMAX);
+            InsereRochaM(&sonda_atual->sonda.CompSonda, &comp_atual2->rocha, 255);
+            sonda_atual->sonda.CompSonda.pesoMAX += comp_atual2->rocha.peso; //atualiza o peso
         } else {
-            // Avança para a próxima sonda se o peso ultrapassar o peso médio
-            sonda_atual = sonda_atual->pProx;
+            sonda_atual = sonda_atual->pProx; //avança para a próxima sonda
             if (sonda_atual == NULL) {
-                sonda_atual = sondas->pPrimeiro->pProx; // Reinicia a distribuição
+                sonda_atual = sondas->pPrimeiro->pProx; //reinicia a distribuição
             }
         }
-        comp_atual2 = comp_atual2->pProx;
+        comp_atual2 = comp_atual2->pProx; //avança para a próxima rocha
     }
     printf("\n");
     printf("Redistribuicao concluida.\n");
