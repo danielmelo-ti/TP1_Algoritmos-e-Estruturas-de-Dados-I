@@ -19,7 +19,7 @@ void FListaRochaM(Compartimento *LRM, int pesoMAX);
 int LEhVaziaRochaM(Compartimento *LRM);
 double PesoAtual(Compartimento *LRM);
 int InsereRochaM(Compartimento *LRM, RochaMineral *RochaM, int pesoMAX);
-int RmoveRochaM(Compartimento *LRM, int posicao, RochaMineral RochaM);
+int RmoveRochaM(Compartimento *LRM, int posicao, RochaMineral *RochaM);
 int TrocaRochaM(Compartimento *LRM, RochaMineral *RochaM, int pesoMAX);
 void ImprimeListaRochaM(Compartimento *LRM);
 
