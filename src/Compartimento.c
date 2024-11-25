@@ -43,8 +43,46 @@ int InsereRochaM(Compartimento *LRM, RochaMineral *RochaM, int PesoMax){
     return 1;
 }
 
-int RmoveRochaM(Compartimento *LRM, int posicao, RochaMineral RochaM){
-    //Implementar função
+int RmoveRochaM(Compartimento *LRM, int posicao, RochaMineral *RochaM){
+    if(LEhVaziaRochaM(LRM)){
+        printf("Lista Vazia!");
+        return 0;
+    }
+
+    CelulaC *pAux = LRM->pPrimeiro;
+    CelulaC *pRemovida = NULL;
+
+    for (int i = 0; i < posicao; i++)
+    {
+        if (pAux->pProx == NULL)
+        {
+            printf("Posicao Invalida!");
+            return 0;
+        }
+        pAux = pAux->pProx;
+    }
+
+    pRemovida = pAux->pProx;
+
+    if (pRemovida == NULL)
+    {
+        printf("Posicao invalida");
+        return 0;
+    }
+
+    pAux->pProx = pRemovida->pProx;
+
+    if (RochaM != NULL)
+    {
+        *RochaM = pRemovida->rocha;
+    }
+    
+    if (pAux->pProx == NULL)
+    {
+        LRM->pUltimo = pAux;
+    }
+    
+    return 1;
 }
 
 int TrocaRochaM(Compartimento *LRM, RochaMineral *RochaM, int PesoMax){
